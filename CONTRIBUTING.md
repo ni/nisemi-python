@@ -1,14 +1,13 @@
-# Contributing to nisemi-python
+# Contributing to \<nisdc\> 
 
-Contributions to **[nisemi-python](https://github.com/ni/nisemi-python)** are welcome from all!
+Contributions to \<nisdc\> are welcome from all!
 
-**[nisemi-python](https://github.com/ni/nisemi-python)** is managed via [Git](https://git-scm.com),
-with the canonical upstream repository hosted on [GitHub](http://developercertificate.org/).
+\<nisdc\> is managed via [git](https://git-scm.com), with the canonical upstream
+repository hosted on '[GitHub]<https://github.com/ni/nisdc/>'_.
 
-**[nisemi-python](https://github.com/ni/nisemi-python)** follows a pull-request model for development.
-If you wish to contribute, you will need to create a GitHub account, 
-fork this project, push a branch with your changes to your project, 
-and then submit a pull request.
+\<nisdc\> follows a pull-request model for development.  If you wish to
+contribute, you will need to create a GitHub account, fork this project, push a
+branch with your changes to your project, and then submit a pull request.
 
 Please remember to sign off your commits (e.g., by using `git commit -s` if you
 are using the command line client). This amends your git commit message with a line
@@ -22,7 +21,7 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 
 # Getting Started
 
-1. Pre requisite: Refer to Installation section of [Readme](README.md) 
+1. Pre requisite: Install pythonnet and Semiconductor Device Control addon for InstrumentStudio 2019 from NI package manager. Refer to Installation section of [Readme](README.md) 
 2. Clone the repository and make your changes to APIs and examples using the practices mentioend above. 
 3. For instruction to build, please refer to [packaging-project](https://packaging.python.org/tutorials/packaging-projects/). setup.py file present in this repository has the specificiation to build packages. You can use this start building the API pypi packages.
 4. The latest build are also maintained in this github repository under the 'dist' folder.
@@ -57,6 +56,5 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 
 (taken from [developercertificate.org](https://developercertificate.org/))
 
-See [LICENSE](https://github.com/ni/nisemi-python/blob/master/LICENSE) 
-for details about how **[nisemi-python](https://github.com/ni/nisemi-python)** 
-is licensed.
+See [LICENSE](https://github.com/ni/<nisdc>/blob/master/LICENSE)
+for details about how \<nisdc\> is licensed.
