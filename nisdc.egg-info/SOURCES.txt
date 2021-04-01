@@ -1,0 +1,9 @@
+README.md
+setup.py
+nisdc/__init__.py
+nisdc/nisemidevicecontrol.py
+nisdc.egg-info/PKG-INFO
+nisdc.egg-info/SOURCES.txt
+nisdc.egg-info/dependency_links.txt
+nisdc.egg-info/requires.txt
+nisdc.egg-info/top_level.txt

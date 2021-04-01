@@ -56,7 +56,7 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 
 ** Work with github source code **  
 3. Clone the github repository - '[semiconductor device control python api github repo]<link>'_ 
-4. Use the APIs from 'nisemidevicecontrolapi' folder in your program  
+4. Use the APIs from 'nisdc' folder in your program  
 
 ** Work with Semiconductor Device Control Python API from pypi **  
 3. Go to Semiconductor Device Contro Python API location in `pypi <ni pypi download link>`_.  
