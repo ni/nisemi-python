@@ -1,0 +1,4 @@
+writedio Vdd High
+writedio Vdd_IO High
+writedio CS High
+writedio SDO Low
