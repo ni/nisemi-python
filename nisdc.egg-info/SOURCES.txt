@@ -7,3 +7,5 @@ nisdc.egg-info/SOURCES.txt
 nisdc.egg-info/dependency_links.txt
 nisdc.egg-info/requires.txt
 nisdc.egg-info/top_level.txt
+nisdc_i3c/__init__.py
+nisdc_i3c/nisdc_i3c.py

@@ -925,6 +925,48 @@ class SemiconductorDeviceControl:
             print("Exception occured at get script names")
             raise e
 
+    def get_dynamic_protocol_settings(self, interface_name, protocol_name):
+        '''
+        Gets the dynamic protocol settings of the protocol
+        Return:
+            protocol_settings {list of settings}
+        '''
+
+        try:
+            return self.semidevicecontrol_session.GetDynamicProtocolSetting(interface_name, protocol_name)
+
+        except Exception as e:
+            print("Exception occured at get protocol settings")
+            raise e
+
+    def update_dynamic_protocol_settings(self, interface_name, protocol_name, updated_setting):
+        '''
+        Updates the dynamic protocol settings of the protocol
+        Return:
+            status_of_update_settings {dictionary containing ErrorMessage by setting name}
+        '''
+
+        try:
+            return self.semidevicecontrol_session.UpdateDynamicProtocolSetting(interface_name, protocol_name, updated_setting)
+
+        except Exception as e:
+            print("Exception occured at update protocol settings")
+            raise e
+
+    def get_instrument_session(self, interface_name):
+        '''
+        Gets the session ID of the instrument
+        Return:
+            int {session ID}
+        '''
+
+        try:
+            return int(self.semidevicecontrol_session.GetInterfaceSessionID(interface_name).SessionID)
+
+        except Exception as e:
+            print("Exception occured at get instrument session")
+            raise e
+
     def get_script_string(self, script_name):
         '''
         This API provides the <b>Script String</b> and <b>IsScriptFileValid</b> status from Device Control session for the given the <b>Script Name</b> input.

@@ -46,6 +46,10 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 ** DIO operation  **  
 34. Write Pin State  
 35. Read Pin State  
+** Utils **
+36. Get Dynamic Protocol Settings
+37. Update Dynamic Protocol Settings
+38. Get Instrument Session
 
 
 # Installation
