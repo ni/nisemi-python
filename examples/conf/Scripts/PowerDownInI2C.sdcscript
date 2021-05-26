@@ -1,0 +1,3 @@
+writedio Vdd_IO Low
+writedio Vdd Low
+writedio CS Low

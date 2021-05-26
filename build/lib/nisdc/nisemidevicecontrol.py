@@ -829,6 +829,56 @@ class SemiconductorDeviceControl:
             print("Exception occured at write pin state")
             raise e
 
+    # -------------------------------- SCRIPTS ------------------------------
+
+    def execute_script(self, file_name, wait_until_complete=True):
+        '''
+        Executes the script using the <b>Script Name</b> provided as a input.
+        If a script is already running on the semi device control session, this API will throw error indicating that another script is running already.
+        Using <b> waitUntilScriptCompletion</b> bool control, developer can configure this API to run the script as a blocking call or run asynchronously. 
+
+        Arguments:
+            file_name {string}
+            wait_until_complete {bool}
+        '''
+        
+        try:
+            self.semidevicecontrol_session.ExecuteScript(file_name, wait_until_complete)
+
+        except Exception as e:
+            print("Exception occured at execute script")
+            raise e
+
+    def execute_script_command(self, script_string, wait_until_complete=True):
+        '''
+        Executes the <b>Script String</b> provided as the input to the API.
+        If the <b>Script String</b> is invalid, error will be thrown, and execution will be skipped.
+        If <b>waitUntilComplete?</b> is <b>True</b>, then the API will wait until the script is executed, else the API will run the script asynchronously and stop.
+
+        Arguments:
+            script_string {string}
+            wait_until_complete {bool}
+        '''
+        
+        try:
+            self.semidevicecontrol_session.ExecuteScriptCommand(script_string, wait_until_complete)
+
+        except Exception as e:
+            print("Exception occured at execute script command")
+            raise e
+
+    def abort_script(self):
+        '''
+        Abort Script will abort the currently running script on the semi device control session. 
+        '''
+        
+        try:
+            self.semidevicecontrol_session.AbortScript()
+
+        except Exception as e:
+            print("Exception occured at abort script")
+            raise e
+
     # -------------------------------- UTILS --------------------------------
 
     def get_logs(self):
@@ -845,4 +895,51 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("Exception occured at log function")
+            raise e
+
+    def reset_to_default_state(self):
+        '''
+        Reset the device software register values and dio states to default.
+        '''
+        
+        try:
+            self.semidevicecontrol_session.ResetToDefaultState()
+
+        except Exception as e:
+            print("Exception occured at reset to default state")
+            raise e
+    
+    def get_script_names(self):
+        '''
+        Gets the list of script file names available in the source folder location
+
+        Return:
+            script_names {list of strings}
+        '''
+        
+        try:
+            script_names = self.semidevicecontrol_session.GetScriptFileName()
+            return script_names
+
+        except Exception as e:
+            print("Exception occured at get script names")
+            raise e
+
+    def get_script_string(self, script_name):
+        '''
+        This API provides the <b>Script String</b> and <b>IsScriptFileValid</b> status from Device Control session for the given the <b>Script Name</b> input.
+
+        Arguments:
+            script_name {string}
+
+        Return:
+            Tuple { bool - IsScriptValid, string - ScriptContent}
+        '''
+        
+        try:
+            script_detail = self.semidevicecontrol_session.GetScriptString(script_name)
+            return script_detail.IsScriptValid, script_detail.ScriptContent
+
+        except Exception as e:
+            print("Exception occured at get script string")
             raise e

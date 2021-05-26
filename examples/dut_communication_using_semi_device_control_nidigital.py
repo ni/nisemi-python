@@ -1,6 +1,6 @@
 '''
-Overview: Demonstrates how to use the Semi Device Control APIs to establish
-communication sequence with the DUT
+Overview: Demonstrates how to use the NI Digital Instance through
+Semi Device Control APIs to establish communication sequence with the DUT
 Requirement: Python full development system
 
 Instructions:
@@ -12,6 +12,7 @@ Instructions:
 import os
 import sys
 import time
+import nidigital
 
 # To add the directory of the source file(nisemidevicecontrol.py) when the
 # example is opened from the examples folder or the top level folder
@@ -19,11 +20,11 @@ sys.path.append(os.path.normpath(os.getcwd() + os.sep + os.pardir))
 sys.path.append(os.getcwd())
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from nisemidevicecontrolapi.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
+from nisdc.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
 
 # Get Instrument Studio Configuration
 ISconfigpath = os.path.join(os.path.dirname(
-    os.path.abspath(__file__)), 'conf', 'isconfig.sdconfig'
+    os.path.abspath(__file__)), 'conf', 'LPS22HH I3C.sdconfig'
 )
 
 
@@ -32,25 +33,34 @@ ISconfigpath = os.path.join(os.path.dirname(
 # the two APIs used at the start/during setup sequence to create the required
 # handles internally
 semi_device_control = None
+nidigital_session = None
 
 try:
 
     semi_device_control = SemiconductorDeviceControl(ISconfigpath)
     semi_device_control.start()
 
-    # Using the DIO APIs to control Board/Device Pins
-    '''
-    Pin State corresponding long int values
-    2-Terminate
-    1-High
-    0-Low
-    '''
+    # Get the 657x session 
+    session_id = semi_device_control.get_instrument_session("NI 657x")
+    nidigital_session =  nidigital.Session.from_handle(session_id)
 
-    semi_device_control.write_pin_state("Vdd", 1)
-    semi_device_control.write_pin_state("Vdd_IO", 1)
-    semi_device_control.write_pin_state("CS", 1)
-    semi_device_control.write_pin_state("SDO", 0)
-    
+    # Using the NI Digital DIO APIs to control Board/Device Pins
+    pinset = nidigital_session.channels["3"]
+    pinset.selected_function = nidigital.SelectedFunction.DIGITAL
+    pinset.write_static(nidigital.WriteStaticPinState.ONE)
+
+    pinset = nidigital_session.channels["4"]
+    pinset.selected_function = nidigital.SelectedFunction.DIGITAL
+    pinset.write_static(nidigital.WriteStaticPinState.ONE)
+
+    pinset = nidigital_session.channels["7"]
+    pinset.selected_function = nidigital.SelectedFunction.DIGITAL
+    pinset.write_static(nidigital.WriteStaticPinState.ONE)
+
+    pinset = nidigital_session.channels["0"]
+    pinset.selected_function = nidigital.SelectedFunction.DIGITAL
+    pinset.write_static(nidigital.WriteStaticPinState.ZERO)
+
     # Wait for DUT to start up
     time.sleep(0.5)
 
@@ -66,8 +76,13 @@ try:
         print(hex(reg_data))
         time.sleep(0.5)
 
-    semi_device_control.write_pin_state("Vdd_IO", 0)
-    semi_device_control.write_pin_state("Vdd", 0)
+    pinset = nidigital_session.channels["4"]
+    pinset.selected_function = nidigital.SelectedFunction.DIGITAL
+    pinset.write_static(nidigital.WriteStaticPinState.ZERO)
+
+    pinset = nidigital_session.channels["3"]
+    pinset.selected_function = nidigital.SelectedFunction.DIGITAL
+    pinset.write_static(nidigital.WriteStaticPinState.ZERO)
 
 except Exception as e:
     print("Exception occurred: {}".format(e))
