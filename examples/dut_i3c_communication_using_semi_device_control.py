@@ -63,7 +63,7 @@ try:
     print(hex(reg_data))
 
     '''
-    CCC Types corresponding long int values
+    CCC Types corresponding int values
     1=Direct
     0=Broadcast
     '''

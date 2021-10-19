@@ -40,7 +40,7 @@ try:
 
     # Using the DIO APIs to control Board/Device Pins
     '''
-    Pin State corresponding long int values
+    Pin State corresponding int values
     2-Terminate
     1-High
     0-Low

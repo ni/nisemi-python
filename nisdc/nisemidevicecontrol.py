@@ -85,7 +85,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             register_uid {string}
-            register_data {long}
+            register_data {int}
 
         '''
         try:
@@ -110,8 +110,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
-            register_data_list {long[]}
+            register_uid_list {list of string}
+            register_data_list {list of int}
 
         '''
         try:
@@ -135,8 +135,8 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
-            register_data {long}
+            register_address {int}
+            register_data {int}
 
         '''
         try:
@@ -164,9 +164,9 @@ class SemiconductorDeviceControl:
         from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
-            register_data_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
+            register_data_list {list of int}
 
         '''
         try:
@@ -188,7 +188,7 @@ class SemiconductorDeviceControl:
         Arguments:
             register_uid {string}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -213,9 +213,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
+            register_uid_list {list of string}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -239,9 +239,9 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
+            register_address {int}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -268,10 +268,10 @@ class SemiconductorDeviceControl:
         element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -296,7 +296,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             field_uid {string}
-            field_data {long}
+            field_data {int}
 
         '''
         try:
@@ -321,8 +321,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
-            field_data_list {long[]}
+            field_uid_list {list of string}
+            field_data_list {list of int}
 
         '''
         try:
@@ -371,7 +371,7 @@ class SemiconductorDeviceControl:
         Arguments:
             field_uid {string}
         Returns:
-            field_data {long}
+            field_data {int}
         '''
         try:
             field_data = self.semidevicecontrol_session.ReadFieldByName_Device(
@@ -395,9 +395,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
+            field_uid_list {list of string}
         Returns:
-            field_data_list {long[]}
+            field_data_list {list of int}
         '''
         try:
             field_data_list = (
@@ -422,7 +422,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             register_uid {string}
-            register_data {long}
+            register_data {int}
 
         '''
         try:
@@ -447,8 +447,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
-            register_data_list {long[]}
+            register_uid_list {list of string}
+            register_data_list {list of int}
 
         '''
         try:
@@ -472,8 +472,8 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
-            register_data {long}
+            register_address {int}
+            register_data {int}
 
         '''
         try:
@@ -501,9 +501,9 @@ class SemiconductorDeviceControl:
         element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
-            register_data_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
+            register_data_list {list of int}
 
         '''
         try:
@@ -525,7 +525,7 @@ class SemiconductorDeviceControl:
         Arguments:
             register_uid {string}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -550,9 +550,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
+            register_uid_list {list of string}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -576,9 +576,9 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
+            register_address {int}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -605,10 +605,10 @@ class SemiconductorDeviceControl:
         element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -634,7 +634,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             field_uid {string}
-            field_data {long}
+            field_data {int}
 
         '''
         try:
@@ -659,8 +659,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
-            field_data_list {long[]}
+            field_uid_list {list of string}
+            field_data_list {list of int}
 
         '''
         try:
@@ -709,7 +709,7 @@ class SemiconductorDeviceControl:
         Arguments:
             field_uid {string}
         Returns:
-            field_data {long}
+            field_data {int}
         '''
         try:
             field_data = self.semidevicecontrol_session.ReadFieldByName_Cache(
@@ -733,9 +733,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
+            field_uid_list {list of string}
         Returns:
-            field_data_list {long[]}
+            field_data_list {list of int}
         '''
         try:
             field_data_list = (
@@ -786,10 +786,10 @@ class SemiconductorDeviceControl:
         Arguments:
             pin_name {string}
         Return:
-            pin_state {long}
+            pin_state {int}
 
 
-        Pin State corresponding long int values
+        Pin State corresponding int values
         2-Terminate
         1=High
         0-Low
@@ -812,9 +812,9 @@ class SemiconductorDeviceControl:
 
         Arguments:
             pin_name {string}
-            pin_state {long}
+            pin_state {int}
 
-            Pin State corresponding long int values
+            Pin State corresponding int values
             2-Terminate
             1=High
             0-Low
@@ -833,9 +833,9 @@ class SemiconductorDeviceControl:
 
     def execute_script(self, file_name, wait_until_complete=True):
         '''
-        Executes the script using the <b>Script Name</b> provided as a input.
+        Executes the script using the Script Name provided as a input.
         If a script is already running on the semi device control session, this API will throw error indicating that another script is running already.
-        Using <b> waitUntilScriptCompletion</b> bool control, developer can configure this API to run the script as a blocking call or run asynchronously. 
+        Using waitUntilScriptCompletion bool control, developer can configure this API to run the script as a blocking call or run asynchronously.
 
         Arguments:
             file_name {string}
@@ -851,9 +851,9 @@ class SemiconductorDeviceControl:
 
     def execute_script_command(self, script_string, wait_until_complete=True):
         '''
-        Executes the <b>Script String</b> provided as the input to the API.
-        If the <b>Script String</b> is invalid, error will be thrown, and execution will be skipped.
-        If <b>waitUntilComplete?</b> is <b>True</b>, then the API will wait until the script is executed, else the API will run the script asynchronously and stop.
+        Executes the Script String provided as the input to the API.
+        If the Script String is invalid, error will be thrown, and execution will be skipped.
+        If waitUntilComplete? is True, then the API will wait until the script is executed, else the API will run the script asynchronously and stop.
 
         Arguments:
             script_string {string}
@@ -969,7 +969,7 @@ class SemiconductorDeviceControl:
 
     def get_script_string(self, script_name):
         '''
-        This API provides the <b>Script String</b> and <b>IsScriptFileValid</b> status from Device Control session for the given the <b>Script Name</b> input.
+        This API provides the Script String and IsScriptFileValid status from Device Control session for the given the Script Name input.
 
         Arguments:
             script_name {string}
