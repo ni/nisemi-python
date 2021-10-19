@@ -911,10 +911,13 @@ class SemiconductorDeviceControl:
         Arguments:
             file_name {string}
             wait_until_complete {bool}
+
+        Returns:
+            Array of string, each  string is the result of the command executed from the script in JSON format {list of string}
         '''
         
         try:
-            self.semidevicecontrol_session.ExecuteScript(file_name, wait_until_complete)
+            return self.semidevicecontrol_session.ExecuteScript(file_name, wait_until_complete)
 
         except Exception as e:
             print("Exception occured at execute script")
@@ -929,10 +932,13 @@ class SemiconductorDeviceControl:
         Arguments:
             script_string {string}
             wait_until_complete {bool}
+
+        Returns:
+            Array of string, each  string is the result of the command executed from the script in JSON format {list of string}
         '''
         
         try:
-            self.semidevicecontrol_session.ExecuteScriptCommand(script_string, wait_until_complete)
+            return self.semidevicecontrol_session.ExecuteScriptCommand(script_string, wait_until_complete)
 
         except Exception as e:
             print("Exception occured at execute script command")
@@ -996,32 +1002,42 @@ class SemiconductorDeviceControl:
             print("Exception occured at get script names")
             raise e
 
-    def get_dynamic_protocol_settings(self, interface_name, protocol_name):
+    def get_protocol_dynamic_setting(self, interface_name, protocol_name, setting_name):
         '''
-        Gets the dynamic protocol settings of the protocol
+        Gets the dynamic protocol setting value of the protocol setting
+
+        Arguments:
+            interface_name {string}
+            protocol_name {string}
+            setting_name {string}
+
         Return:
-            protocol_settings {list of settings}
+            setting_value {string}
         '''
 
         try:
-            return self.semidevicecontrol_session.GetDynamicProtocolSetting(interface_name, protocol_name)
+            return self.semidevicecontrol_session.GetProtocolDynamicSetting(interface_name, protocol_name, setting_name)
 
         except Exception as e:
             print("Exception occured at get protocol settings")
             raise e
 
-    def update_dynamic_protocol_settings(self, interface_name, protocol_name, updated_setting):
+    def set_protocol_dynamic_setting(self, interface_name, protocol_name, setting_name, setting_value):
         '''
         Updates the dynamic protocol settings of the protocol
-        Return:
-            status_of_update_settings {dictionary containing ErrorMessage by setting name}
+
+        Arguments:
+            interface_name {string}
+            protocol_name {string}
+            setting_name {string}
+            setting_value {string}
         '''
 
         try:
-            return self.semidevicecontrol_session.UpdateDynamicProtocolSetting(interface_name, protocol_name, updated_setting)
+            self.semidevicecontrol_session.SetProtocolDynamicSetting(interface_name, protocol_name, setting_name, setting_value)
 
         except Exception as e:
-            print("Exception occured at update protocol settings")
+            print("Exception occured at update dynamic protocol settings")
             raise e
 
     def get_interface_dynamic_setting(self, interface_name, setting_name):
@@ -1068,7 +1084,7 @@ class SemiconductorDeviceControl:
         '''
 
         try:
-            return int(self.semidevicecontrol_session.GetInterfaceSessionID(interface_name).SessionID)
+            return self.semidevicecontrol_session.GetInterfaceSessionID(interface_name)
 
         except Exception as e:
             print("Exception occured at get instrument session")

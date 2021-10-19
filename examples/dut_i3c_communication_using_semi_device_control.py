@@ -76,7 +76,11 @@ try:
     i3c_session.execute_dynamic_addressing_ccc(1, SETDASA_command, 37)
 
     # GETPID command in SDR CCC mode
-    print("The device PID value is " + i3c_session.execute_sdr_ccc_read(1, GETPID_command))
+    device_id=i3c_session.execute_sdr_ccc_read(1, GETPID_command)
+    data_as_hex = []
+    for data in device_id:
+        data_as_hex.append(hex(data))
+    print(f"The device PID value is {','.join(data_as_hex)}")
 
     # Using the write register and read register APIs to perform device operation in I3C mode
     semi_device_control.write_register_by_name_device(
