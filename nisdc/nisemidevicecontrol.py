@@ -11,6 +11,40 @@ sys.path.append(device_control_path)
 clr.AddReference("SemiconductorDeviceControl")
 from SemiconductorDeviceControl import SemiDeviceControlMain  # noqa:E402
 
+def generate_class_string(element_type, device_element_list):
+    '''
+        This method generates the class string to be written to the auto generated file.
+        Arguments:
+            element_type {string}
+            device_element_list {list}
+
+        Return:
+            string - The entire string generated for the class
+        '''
+    ipblock = ''
+    registergroup = ''
+    class_content = ''
+    class_string = 'class '
+    hyphen_delimiter = '-'
+
+    class_content += class_string + element_type + '():\n'
+    for device_element in device_element_list:
+        device_element_details = device_element.split(hyphen_delimiter)
+        current_ipblock = device_element_details[0]
+        current_register_group = device_element_details[1]
+        current_device_element = device_element_details[2]
+
+        if current_ipblock != ipblock:
+            class_content += (str.format('\t' + class_string + '{}():\n', current_ipblock))
+            ipblock = current_ipblock
+
+        if current_register_group != registergroup:
+            class_content += (str.format('\t\t' + class_string + '{}():\n', current_register_group))
+            registergroup = current_register_group 
+
+        class_content += (str.format('\t\t\t{} = "{}"\n', current_device_element, device_element))
+    class_content += '\n\n'
+    return class_content
 
 class SemiconductorDeviceControl:
     def __init__(self, ISconfigpath):
@@ -284,6 +318,24 @@ class SemiconductorDeviceControl:
             print("")
             raise e
 
+    def get_register_addresses(self):
+        '''
+        Gets the list of unique ID and Register addresses
+
+        Returns:
+            register_uid_list {list of string}
+            register_address_list {list of int}
+
+        '''
+        try:
+            register_details = self.semidevicecontrol_session.GetRegisterAddresses()
+            register_uid_list = list(register.UniqueID for register in register_details)
+            register_address_list = list(register.Address for register in register_details)
+            return register_uid_list, register_address_list
+
+        except Exception as e:
+            raise e
+
     # --------------------------- Register Device ---------------------------
 
     # ----------------------------- Field Device -----------------------------
@@ -408,6 +460,25 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("")
+            raise e
+
+    def get_field_definition_details(self, field_uid):
+        '''
+        Gets the field display values, field values and field size for given unique ID
+
+        Arguments:
+            field_uid {string}
+
+        Returns:
+            field_display_values {list of string}
+            field_values {list of int}
+            field_size {int}
+        '''
+        try:
+            field_definition = self.semidevicecontrol_session.GetFieldDefinitionDetails(field_uid)
+            return list(field_definition.DisplayValues), list(field_definition.Values), field_definition.Size
+
+        except Exception as e:
             raise e
 
     # ----------------------------- Field Device -----------------------------
@@ -953,6 +1024,42 @@ class SemiconductorDeviceControl:
             print("Exception occured at update protocol settings")
             raise e
 
+    def get_interface_dynamic_setting(self, interface_name, setting_name):
+            '''
+        Gets the dynamic interface setting value of the interface setting
+
+        Arguments:
+            interface_name {string}
+            setting_name {string}
+
+        Return:
+            setting_value {string}
+        '''
+
+        try:
+            return self.semidevicecontrol_session.GetInterfaceDynamicSetting(interface_name, setting_name)
+
+        except Exception as e:
+            print("Exception occured at get interface settings")
+            raise e
+
+    def set_interface_dynamic_setting(self, interface_name, setting_name, setting_value):
+        '''
+        Updates the dynamic interface setting value of the interface setting
+
+        Arguments:
+            interface_name {string}
+            setting_name {string}
+            setting_value {string}
+        '''
+
+        try:
+            self.semidevicecontrol_session.SetInterfaceDynamicSetting(interface_name, setting_name, setting_value)
+
+        except Exception as e:
+            print("Exception occured at update dynamic interface settings")
+            raise e
+
     def get_instrument_session(self, interface_name):
         '''
         Gets the session ID of the instrument
@@ -965,6 +1072,25 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("Exception occured at get instrument session")
+            raise e
+
+    def get_interface_details(self):
+        '''
+        Gets the list of interface name and interface type
+
+        Return:
+            interface_name_list {list of string}
+            interface_type_list {list of string}
+        '''
+
+        try:
+            interface_details = self.semidevicecontrol_session.GetInterfaceDetails()
+            interface_name_list = list(interface.Name for interface in interface_details)
+            interface_type_list = list(interface.Type for interface in interface_details)
+            return interface_name_list, interface_type_list
+
+        except Exception as e:
+            print("Exception occured at get interface details")
             raise e
 
     def get_script_string(self, script_name):
@@ -984,4 +1110,32 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("Exception occured at get script string")
+            raise e
+
+    def generate_device_elements(self, directory = ''):
+        '''
+        This API generates a class file in the specified directory that contains the register and field elements from the 
+        register map configured in the sdcconfig file. If the directory provided is empty, the file will be created in the working directory
+
+        Arguments:
+            directory {string}
+
+        Return:
+            string - The path where the file is created
+        '''
+
+        try:
+            if directory == '':
+                directory = os.getcwd()
+            elif not(os.path.exists(directory)):
+                raise 'Invalid path to generate the class file'
+            directory += '\\nisdc_device_elements.py'
+            device_state_keys = self.semidevicecontrol_session.GetDeviceStateKeys()
+            
+            with open(directory, 'w+') as class_file:
+                class_file.write(generate_class_string('Register', list(device_state_keys.RegisterUIDs)))
+                class_file.write(generate_class_string('Field', list(device_state_keys.FieldUIDs)))
+            return directory
+        except Exception as e:
+            print("Exception occured at generate device elements")
             raise e
