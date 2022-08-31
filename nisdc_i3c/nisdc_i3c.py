@@ -35,15 +35,15 @@ class SemiDeviceControlI3CSession:
     def execute_dynamic_addressing_ccc(self, ccc_type, command_id, dynamic_address = -1):
         '''
         Executes the CCC used for dynamic addressing based on the given inputs. 
-        If for a given <b> Command ID</b> the dynamic address is not applicable then it will not be applied. 
+        If for a given Command ID the dynamic address is not applicable then it will not be applied.
         And if the Command ID doesn’t match with the CCC Type and CCC Operation an exception will be thrown.
 
         Arguments:
-            ccc_type { long }
-            command_id {byte}
-            dynamic_address {sbyte}
+            ccc_type { int }
+            command_id {int}
+            dynamic_address {int}
 
-            CCC Type corresponding long int values
+            CCC Type corresponding int values
             1=Direct
             0-Broadcast
         '''
@@ -58,20 +58,20 @@ class SemiDeviceControlI3CSession:
         '''
         Executes the CCC used for dynamic addressing based on the given inputs and returns the data read back from the DUT. 
         This API is only applicable for the ENTDAA in the current spec. 
-        If for a given <b> Command ID</b> the dynamic address is not applicable then it will not be applied.  
+        If for a given Command ID the dynamic address is not applicable then it will not be applied.
         And if the Command ID doesn’t match with the CCC Type and CCC Operation an exception will be thrown. 
 
         Arguments:
-            ccc_type { long }
-            command_id {byte}
-            dynamic_address {sbyte}
+            ccc_type { int }
+            command_id {int}
+            dynamic_address {int}
 
-            CCC Type corresponding long int values
+            CCC Type corresponding int values
             1=Direct
             0-Broadcast
 
         Return:
-            read_data {byte[]}
+            read_data {list of int}
         '''
         try:
             read_data = self.i3c_session.ExecuteDynamicAddressingCCCWithRead(ccc_type, command_id, dynamic_address)
@@ -84,16 +84,16 @@ class SemiDeviceControlI3CSession:
     def execute_sdr_ccc_write(self, ccc_type, command_id, defining_byte = -1, write_data = None):
         '''
         Executes the write CCC commands used in SDR mode based on the given inputs.  
-        If for a given <b> Command ID</b> the <b>defining byte</b> and <b>data</b> are not applicable then they will be ignored.  
+        If for a given Command ID the defining byte and data are not applicable then they will be ignored.
         And if the Command ID doesn’t match with the CCC Type and CCC Operation an exception will be thrown. 
         
         Arguments:
-            ccc_type { long }
-            command_id {byte}
-            defining_byte {short}
-            write_data {byte[]}
+            ccc_type { int }
+            command_id {int}
+            defining_byte {int}
+            write_data {list of int}
 
-            CCC Type corresponding long int values
+            CCC Type corresponding int values
             1=Direct
             0-Broadcast
 
@@ -108,22 +108,22 @@ class SemiDeviceControlI3CSession:
     def execute_sdr_ccc_read(self, ccc_type, command_id, defining_byte = -1, read_byte_length = -1):
         '''
         Executes the read CCC commands used in SDR mode based on the given inputs and returns the read data. 
-        If for a given <b> Command ID</b> the <b>Defining Byte</b> is not applicable then they will be ignored. 
-        The <b> read Data Length</b> will only be considered if the value is not provided in the csv file else it will take the value from the csv file.
+        If for a given Command ID the Defining Byte is not applicable then they will be ignored.
+        The  read Data Length will only be considered if the value is not provided in the csv file else it will take the value from the csv file.
         And if the Command ID doesn’t match with the CCC Type and CCC Operation an exception will be thrown.
         
         Arguments:
-            ccc_type { long }
-            command_id {byte}
-            defining_byte {short}
+            ccc_type { int }
+            command_id {int}
+            defining_byte {int}
             read_byte_length {int}
 
-            CCC Type corresponding long int values
+            CCC Type corresponding int values
             1=Direct
             0-Broadcast
 
         Returns:
-            read_data {byte[]}
+            read_data {list of int}
         '''
         try:
             read_data = self.i3c_session.ExecuteSDRCCCRead(ccc_type, command_id, defining_byte, read_byte_length)

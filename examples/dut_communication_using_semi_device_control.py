@@ -20,6 +20,7 @@ sys.path.append(os.getcwd())
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nisdc.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
+import nisdc_device_elements
 
 # Get Instrument Studio Configuration
 ISconfigpath = os.path.join(os.path.dirname(
@@ -40,7 +41,7 @@ try:
 
     # Using the DIO APIs to control Board/Device Pins
     '''
-    Pin State corresponding long int values
+    Pin State corresponding int values
     2-Terminate
     1-High
     0-Low
@@ -58,10 +59,10 @@ try:
     # Using the Read Register APIs to read the register data from the device
     for i in range(25):
         semi_device_control.write_register_by_name_device(
-            "LPS22HH-Control_Register-THS_P_H", i)
+            nisdc_device_elements.Register.LPS22HH.Control_Register.THS_P_H, i)
 
         reg_data = semi_device_control.read_register_by_name_device(
-            "LPS22HH-Control_Register-THS_P_H")
+            nisdc_device_elements.Register.LPS22HH.Control_Register.THS_P_H)
 
         print(hex(reg_data))
         time.sleep(0.5)

@@ -11,6 +11,40 @@ sys.path.append(device_control_path)
 clr.AddReference("SemiconductorDeviceControl")
 from SemiconductorDeviceControl import SemiDeviceControlMain  # noqa:E402
 
+def generate_class_string(element_type, device_element_list):
+    '''
+        This method generates the class string to be written to the auto generated file.
+        Arguments:
+            element_type {string}
+            device_element_list {list}
+
+        Return:
+            string - The entire string generated for the class
+        '''
+    ipblock = ''
+    registergroup = ''
+    class_content = ''
+    class_string = 'class '
+    hyphen_delimiter = '-'
+
+    class_content += class_string + element_type + '():\n'
+    for device_element in device_element_list:
+        device_element_details = device_element.split(hyphen_delimiter)
+        current_ipblock = device_element_details[0]
+        current_register_group = device_element_details[1]
+        current_device_element = device_element_details[2]
+
+        if current_ipblock != ipblock:
+            class_content += (str.format('\t' + class_string + '{}():\n', current_ipblock))
+            ipblock = current_ipblock
+
+        if current_register_group != registergroup:
+            class_content += (str.format('\t\t' + class_string + '{}():\n', current_register_group))
+            registergroup = current_register_group 
+
+        class_content += (str.format('\t\t\t{} = "{}"\n', current_device_element, device_element))
+    class_content += '\n\n'
+    return class_content
 
 class SemiconductorDeviceControl:
     def __init__(self, ISconfigpath):
@@ -85,7 +119,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             register_uid {string}
-            register_data {long}
+            register_data {int}
 
         '''
         try:
@@ -110,8 +144,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
-            register_data_list {long[]}
+            register_uid_list {list of string}
+            register_data_list {list of int}
 
         '''
         try:
@@ -135,8 +169,8 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
-            register_data {long}
+            register_address {int}
+            register_data {int}
 
         '''
         try:
@@ -164,9 +198,9 @@ class SemiconductorDeviceControl:
         from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
-            register_data_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
+            register_data_list {list of int}
 
         '''
         try:
@@ -188,7 +222,7 @@ class SemiconductorDeviceControl:
         Arguments:
             register_uid {string}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -213,9 +247,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
+            register_uid_list {list of string}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -239,9 +273,9 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
+            register_address {int}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -268,10 +302,10 @@ class SemiconductorDeviceControl:
         element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -282,6 +316,24 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("")
+            raise e
+
+    def get_register_addresses(self):
+        '''
+        Gets the list of unique ID and Register addresses
+
+        Returns:
+            register_uid_list {list of string}
+            register_address_list {list of int}
+
+        '''
+        try:
+            register_details = self.semidevicecontrol_session.GetRegisterAddresses()
+            register_uid_list = list(register.UniqueID for register in register_details)
+            register_address_list = list(register.Address for register in register_details)
+            return register_uid_list, register_address_list
+
+        except Exception as e:
             raise e
 
     # --------------------------- Register Device ---------------------------
@@ -296,7 +348,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             field_uid {string}
-            field_data {long}
+            field_data {int}
 
         '''
         try:
@@ -321,8 +373,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
-            field_data_list {long[]}
+            field_uid_list {list of string}
+            field_data_list {list of int}
 
         '''
         try:
@@ -371,7 +423,7 @@ class SemiconductorDeviceControl:
         Arguments:
             field_uid {string}
         Returns:
-            field_data {long}
+            field_data {int}
         '''
         try:
             field_data = self.semidevicecontrol_session.ReadFieldByName_Device(
@@ -395,9 +447,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
+            field_uid_list {list of string}
         Returns:
-            field_data_list {long[]}
+            field_data_list {list of int}
         '''
         try:
             field_data_list = (
@@ -408,6 +460,25 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("")
+            raise e
+
+    def get_field_definition_details(self, field_uid):
+        '''
+        Gets the field display values, field values and field size for given unique ID
+
+        Arguments:
+            field_uid {string}
+
+        Returns:
+            field_display_values {list of string}
+            field_values {list of int}
+            field_size {int}
+        '''
+        try:
+            field_definition = self.semidevicecontrol_session.GetFieldDefinitionDetails(field_uid)
+            return list(field_definition.DisplayValues), list(field_definition.Values), field_definition.Size
+
+        except Exception as e:
             raise e
 
     # ----------------------------- Field Device -----------------------------
@@ -422,7 +493,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             register_uid {string}
-            register_data {long}
+            register_data {int}
 
         '''
         try:
@@ -447,8 +518,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
-            register_data_list {long[]}
+            register_uid_list {list of string}
+            register_data_list {list of int}
 
         '''
         try:
@@ -472,8 +543,8 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
-            register_data {long}
+            register_address {int}
+            register_data {int}
 
         '''
         try:
@@ -501,9 +572,9 @@ class SemiconductorDeviceControl:
         element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
-            register_data_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
+            register_data_list {list of int}
 
         '''
         try:
@@ -525,7 +596,7 @@ class SemiconductorDeviceControl:
         Arguments:
             register_uid {string}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -550,9 +621,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            register_uid_list {string[]}
+            register_uid_list {list of string}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -576,9 +647,9 @@ class SemiconductorDeviceControl:
 
         Arguments:
             ip_block_name {string}
-            register_address {long}
+            register_address {int}
         Returns:
-            register_data {long}
+            register_data {int}
         '''
         try:
             register_data = (
@@ -605,10 +676,10 @@ class SemiconductorDeviceControl:
         element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {string[]}
-            register_address_list {long[]}
+            ip_block_name_list {list of string}
+            register_address_list {list of int}
         Returns:
-            register_data_list {long[]}
+            register_data_list {list of int}
         '''
         try:
             register_data_list = (
@@ -634,7 +705,7 @@ class SemiconductorDeviceControl:
 
         Arguments:
             field_uid {string}
-            field_data {long}
+            field_data {int}
 
         '''
         try:
@@ -659,8 +730,8 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
-            field_data_list {long[]}
+            field_uid_list {list of string}
+            field_data_list {list of int}
 
         '''
         try:
@@ -709,7 +780,7 @@ class SemiconductorDeviceControl:
         Arguments:
             field_uid {string}
         Returns:
-            field_data {long}
+            field_data {int}
         '''
         try:
             field_data = self.semidevicecontrol_session.ReadFieldByName_Cache(
@@ -733,9 +804,9 @@ class SemiconductorDeviceControl:
         array will be applied.
 
         Arguments:
-            field_uid_list {string[]}
+            field_uid_list {list of string}
         Returns:
-            field_data_list {long[]}
+            field_data_list {list of int}
         '''
         try:
             field_data_list = (
@@ -786,10 +857,10 @@ class SemiconductorDeviceControl:
         Arguments:
             pin_name {string}
         Return:
-            pin_state {long}
+            pin_state {int}
 
 
-        Pin State corresponding long int values
+        Pin State corresponding int values
         2-Terminate
         1=High
         0-Low
@@ -812,9 +883,9 @@ class SemiconductorDeviceControl:
 
         Arguments:
             pin_name {string}
-            pin_state {long}
+            pin_state {int}
 
-            Pin State corresponding long int values
+            Pin State corresponding int values
             2-Terminate
             1=High
             0-Low
@@ -833,17 +904,20 @@ class SemiconductorDeviceControl:
 
     def execute_script(self, file_name, wait_until_complete=True):
         '''
-        Executes the script using the <b>Script Name</b> provided as a input.
+        Executes the script using the Script Name provided as a input.
         If a script is already running on the semi device control session, this API will throw error indicating that another script is running already.
-        Using <b> waitUntilScriptCompletion</b> bool control, developer can configure this API to run the script as a blocking call or run asynchronously. 
+        Using waitUntilScriptCompletion bool control, developer can configure this API to run the script as a blocking call or run asynchronously.
 
         Arguments:
             file_name {string}
             wait_until_complete {bool}
+
+        Returns:
+            Array of string, each  string is the result of the command executed from the script in JSON format {list of string}
         '''
         
         try:
-            self.semidevicecontrol_session.ExecuteScript(file_name, wait_until_complete)
+            return self.semidevicecontrol_session.ExecuteScript(file_name, wait_until_complete)
 
         except Exception as e:
             print("Exception occured at execute script")
@@ -851,17 +925,20 @@ class SemiconductorDeviceControl:
 
     def execute_script_command(self, script_string, wait_until_complete=True):
         '''
-        Executes the <b>Script String</b> provided as the input to the API.
-        If the <b>Script String</b> is invalid, error will be thrown, and execution will be skipped.
-        If <b>waitUntilComplete?</b> is <b>True</b>, then the API will wait until the script is executed, else the API will run the script asynchronously and stop.
+        Executes the Script String provided as the input to the API.
+        If the Script String is invalid, error will be thrown, and execution will be skipped.
+        If waitUntilComplete? is True, then the API will wait until the script is executed, else the API will run the script asynchronously and stop.
 
         Arguments:
             script_string {string}
             wait_until_complete {bool}
+
+        Returns:
+            Array of string, each  string is the result of the command executed from the script in JSON format {list of string}
         '''
         
         try:
-            self.semidevicecontrol_session.ExecuteScriptCommand(script_string, wait_until_complete)
+            return self.semidevicecontrol_session.ExecuteScriptCommand(script_string, wait_until_complete)
 
         except Exception as e:
             print("Exception occured at execute script command")
@@ -925,32 +1002,78 @@ class SemiconductorDeviceControl:
             print("Exception occured at get script names")
             raise e
 
-    def get_dynamic_protocol_settings(self, interface_name, protocol_name):
+    def get_protocol_dynamic_setting(self, interface_name, protocol_name, setting_name):
         '''
-        Gets the dynamic protocol settings of the protocol
+        Gets the dynamic protocol setting value of the protocol setting
+
+        Arguments:
+            interface_name {string}
+            protocol_name {string}
+            setting_name {string}
+
         Return:
-            protocol_settings {list of settings}
+            setting_value {string}
         '''
 
         try:
-            return self.semidevicecontrol_session.GetDynamicProtocolSetting(interface_name, protocol_name)
+            return self.semidevicecontrol_session.GetProtocolDynamicSetting(interface_name, protocol_name, setting_name)
 
         except Exception as e:
             print("Exception occured at get protocol settings")
             raise e
 
-    def update_dynamic_protocol_settings(self, interface_name, protocol_name, updated_setting):
+    def set_protocol_dynamic_setting(self, interface_name, protocol_name, setting_name, setting_value):
         '''
         Updates the dynamic protocol settings of the protocol
-        Return:
-            status_of_update_settings {dictionary containing ErrorMessage by setting name}
+
+        Arguments:
+            interface_name {string}
+            protocol_name {string}
+            setting_name {string}
+            setting_value {string}
         '''
 
         try:
-            return self.semidevicecontrol_session.UpdateDynamicProtocolSetting(interface_name, protocol_name, updated_setting)
+            self.semidevicecontrol_session.SetProtocolDynamicSetting(interface_name, protocol_name, setting_name, setting_value)
 
         except Exception as e:
-            print("Exception occured at update protocol settings")
+            print("Exception occured at update dynamic protocol settings")
+            raise e
+
+    def get_interface_dynamic_setting(self, interface_name, setting_name):
+            '''
+        Gets the dynamic interface setting value of the interface setting
+
+        Arguments:
+            interface_name {string}
+            setting_name {string}
+
+        Return:
+            setting_value {string}
+        '''
+
+        try:
+            return self.semidevicecontrol_session.GetInterfaceDynamicSetting(interface_name, setting_name)
+
+        except Exception as e:
+            print("Exception occured at get interface settings")
+            raise e
+
+    def set_interface_dynamic_setting(self, interface_name, setting_name, setting_value):
+        '''
+        Updates the dynamic interface setting value of the interface setting
+
+        Arguments:
+            interface_name {string}
+            setting_name {string}
+            setting_value {string}
+        '''
+
+        try:
+            self.semidevicecontrol_session.SetInterfaceDynamicSetting(interface_name, setting_name, setting_value)
+
+        except Exception as e:
+            print("Exception occured at update dynamic interface settings")
             raise e
 
     def get_instrument_session(self, interface_name):
@@ -961,15 +1084,34 @@ class SemiconductorDeviceControl:
         '''
 
         try:
-            return int(self.semidevicecontrol_session.GetInterfaceSessionID(interface_name).SessionID)
+            return self.semidevicecontrol_session.GetInterfaceSessionID(interface_name)
 
         except Exception as e:
             print("Exception occured at get instrument session")
             raise e
 
+    def get_interface_details(self):
+        '''
+        Gets the list of interface name and interface type
+
+        Return:
+            interface_name_list {list of string}
+            interface_type_list {list of string}
+        '''
+
+        try:
+            interface_details = self.semidevicecontrol_session.GetInterfaceDetails()
+            interface_name_list = list(interface.Name for interface in interface_details)
+            interface_type_list = list(interface.Type for interface in interface_details)
+            return interface_name_list, interface_type_list
+
+        except Exception as e:
+            print("Exception occured at get interface details")
+            raise e
+
     def get_script_string(self, script_name):
         '''
-        This API provides the <b>Script String</b> and <b>IsScriptFileValid</b> status from Device Control session for the given the <b>Script Name</b> input.
+        This API provides the Script String and IsScriptFileValid status from Device Control session for the given the Script Name input.
 
         Arguments:
             script_name {string}
@@ -984,4 +1126,32 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("Exception occured at get script string")
+            raise e
+
+    def generate_device_elements(self, directory = ''):
+        '''
+        This API generates a class file in the specified directory that contains the register and field elements from the 
+        register map configured in the sdcconfig file. If the directory provided is empty, the file will be created in the working directory
+
+        Arguments:
+            directory {string}
+
+        Return:
+            string - The path where the file is created
+        '''
+
+        try:
+            if directory == '':
+                directory = os.getcwd()
+            elif not(os.path.exists(directory)):
+                raise 'Invalid path to generate the class file'
+            directory += '\\nisdc_device_elements.py'
+            device_state_keys = self.semidevicecontrol_session.GetDeviceStateKeys()
+            
+            with open(directory, 'w+') as class_file:
+                class_file.write(generate_class_string('Register', list(device_state_keys.RegisterUIDs)))
+                class_file.write(generate_class_string('Field', list(device_state_keys.FieldUIDs)))
+            return directory
+        except Exception as e:
+            print("Exception occured at generate device elements")
             raise e

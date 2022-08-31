@@ -41,7 +41,7 @@ try:
     semi_device_control.start()
 
     # Get the 657x session 
-    session_id = semi_device_control.get_instrument_session("NI 657x")
+    session_id = int(semi_device_control.get_instrument_session("NI 657x").SessionID)
     nidigital_session =  nidigital.Session.from_handle(session_id)
 
     # Using the NI Digital DIO APIs to control Board/Device Pins
