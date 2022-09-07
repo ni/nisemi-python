@@ -1,6 +1,6 @@
 '''
 Overview: Demonstrates how to use the Semi Device Control APIs to establish
-communication sequence with the DUT
+communication sequence with the DUT using scripts
 Requirement: Python full development system
 
 Instructions:
@@ -19,7 +19,7 @@ sys.path.append(os.path.normpath(os.getcwd() + os.sep + os.pardir))
 sys.path.append(os.getcwd())
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from nisemidevicecontrolapi.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
+from nisdc.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
 
 # Get Instrument Studio Configuration
 ISconfigpath = os.path.join(os.path.dirname(
@@ -38,18 +38,9 @@ try:
     semi_device_control = SemiconductorDeviceControl(ISconfigpath)
     semi_device_control.start()
 
-    # Using the DIO APIs to control Board/Device Pins
-    '''
-    Pin State corresponding long int values
-    2-Terminate
-    1-High
-    0-Low
-    '''
+    # Using the Script APIs to control Board/Device Pins
 
-    semi_device_control.write_pin_state("Vdd", 1)
-    semi_device_control.write_pin_state("Vdd_IO", 1)
-    semi_device_control.write_pin_state("CS", 1)
-    semi_device_control.write_pin_state("SDO", 0)
+    semi_device_control.execute_script("PowerUpInI2C")
     
     # Wait for DUT to start up
     time.sleep(0.5)
@@ -66,8 +57,9 @@ try:
         print(hex(reg_data))
         time.sleep(0.5)
 
-    semi_device_control.write_pin_state("Vdd_IO", 0)
-    semi_device_control.write_pin_state("Vdd", 0)
+    # Using the Script APIs to power down Board
+
+    semi_device_control.execute_script("PowerDownInI2C")
 
 except Exception as e:
     print("Exception occurred: {}".format(e))
