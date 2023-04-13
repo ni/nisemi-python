@@ -1041,7 +1041,7 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_interface_dynamic_setting(self, interface_name, setting_name):
-            '''
+        '''
         Gets the dynamic interface setting value of the interface setting
 
         Arguments:

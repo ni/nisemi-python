@@ -7,21 +7,21 @@ with open('LICENSE') as f:
     license_txt = f.read()
 
 setup(
-    name="nisdc",
-    version="20.0.0",
+    name="nisemidevicecontrolapi",
+    version="22.5.0",
     description="NI Semiconductor Device Control python Support provides python APIs to develop python test programs and communicate with a device using the setup configuration exported from the Semiconductor Device Control Add-On for InstrumentStudio.",
     long_description=readme,
     long_description_content_type='text/x-md',
     author="National Instruments",
     author_email="support@ni.com",
-    keywords=['nisdc', 'nisemidevicecontrol'],
+    keywords=['nisemidevicecontrolapi', 'nisemidevicecontrol'],
     url=None,
     maintainer="National Instruments",
     maintainer_email="support@ni.com",
     include_package_data=True,
     packages=find_packages(),
     package_data={
-        "nisdc": ['VERSION']
+        "nisemidevicecontrolapi": ['VERSION']
     },
     install_requires=['pythonnet==2.5.1'],
     classifiers=[
