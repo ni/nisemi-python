@@ -212,6 +212,39 @@ class SemiconductorDeviceControl:
             print("")
             raise e
 
+    def write_custom_register_by_address_device(
+            self, register_address,
+            address_size, register_data,
+            register_size, interface_name, protocol_name):
+        '''
+        Writes the data using the register address and register size to the device with the given interface and protocol.
+
+		Register address: Address of the register.
+		
+        Address size: Size of the address.
+		
+        Size: Size of the register.
+		
+        Interface name: Name of the interface to use.
+		
+        Protocol name: Name of the protocol to use.
+
+        Arguments:
+            register_address {int}
+            address_size {int}
+            register_data {int} 
+            register_size {int}
+            interface_name {string}
+            protocol_name {string}
+        '''
+        try:
+            self.semidevicecontrol_session.WriteCustomRegisterByAddress_Device(
+                register_address,address_size,register_data,register_size,interface_name,protocol_name
+            )
+        except Exception as e:
+            print("")
+            raise e
+
     def read_register_by_name_device(self, register_uid):
         '''
         Reads the data from the device using the register unique name.
@@ -313,6 +346,42 @@ class SemiconductorDeviceControl:
                     ip_block_name_list, register_address_list)
             )
             return register_data_list
+
+        except Exception as e:
+            print("")
+            raise e
+
+    def read_custom_register_by_address_device(
+            self, register_address,
+            address_size, register_size,
+            interface_name, protocol_name):
+        '''
+        Reads the data using the register address and register size from the device with the given interface and protocol.
+
+		Register address: Address of the register.
+		
+        Address size: Size of the address.
+		
+        Size: Size of the register.
+		
+        Interface name: Name of the interface to use.
+		
+        Protocol name: Name of the protocol to use.
+
+        Arguments:
+            register_address {int}
+            address_size {int}
+            register_size {int}
+            interface_name {string}
+            protocol_name {string}
+        Returns:
+            register_data {int}        
+        '''
+        try:
+            register_data = (self.semidevicecontrol_session.ReadCustomRegisterByAddress_Device(
+                register_address,address_size,register_size,interface_name,protocol_name)
+                )
+            return register_data
 
         except Exception as e:
             print("")
