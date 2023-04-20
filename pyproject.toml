@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "nisdc"
+version = "23.3.0"
+description = "NI Semiconductor Device Control python Support provides python APIs to develop python test programs and communicate with a device using the setup configuration exported from the Semiconductor Device Control Add-On for InstrumentStudio."
+authors = ["National Instruments"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">= 3.7, < 3.9"
+pythonnet = "2.5.1"
+
+[tool.poetry.group.dev.dependencies]
+ni-python-styleguide = ">=0.4.0"
+black = "23.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

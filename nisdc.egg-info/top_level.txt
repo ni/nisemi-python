@@ -1,2 +1,0 @@
-nisdc
-nisdc_i3c
