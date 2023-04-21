@@ -1,17 +1,18 @@
-"""
-Overview: Demonstrates how to use the NI Digital Instance through
-Semi Device Control APIs to establish communication sequence with the DUT
-Requirement: Python full development system
+"""Overview: Demonstrates how to use the NI Digital Instance through.
 
-Instructions:
-    1. Run this python code
-    2. View the read register value being printed in the terminal for each
-    iteration
+Semi Device Control APIs to establish communication sequence with the DUT.
+
+Requirement: Python full development system.
+
+Instructions:1. Run this python code.
+
+2. View the read register value being printed in the terminal for each iteration.
 """
 
 import os
 import sys
 import time
+
 import nidigital
 
 # To add the directory of the source file(nisemidevicecontrol.py) when the

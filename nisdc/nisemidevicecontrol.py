@@ -1,6 +1,9 @@
-import sys
+"""This file is used for Semi Device Control API."""
 import os
+import sys
+
 import clr
+
 
 device_control_path = (
     "C:\\Program Files\\National Instruments\\" + "Semi Device Control"
@@ -14,15 +17,9 @@ from SemiconductorDeviceControl import SemiDeviceControlMain  # noqa:E402
 
 
 def generate_class_string(element_type, device_element_list):
-    """
-    This method generates the class string to be written to the auto generated file.
-    Arguments:
-        element_type {string}
-        device_element_list {list}
-
-    Return:
-        string - The entire string generated for the class
-    """
+    """This method generates the class string to be written to the auto generated file."""
+    """Arguments: element_type {string},device_element_list {list}"""
+    """Return: string - The entire string generated for the class """
     ipblock = ""
     registergroup = ""
     class_content = ""
@@ -54,17 +51,16 @@ def generate_class_string(element_type, device_element_list):
     class_content += "\n\n"
     return class_content
 
-
 class SemiconductorDeviceControl:
-    def __init__(self, ISconfigpath):
-        """
-        Creates and returns a device control session using the Instrument
-        Studio export configuration. IS export configuration contains the
-        register map and hardware configuration for Device Control
-
-        Arguments:
-            ISconfigpath {path}
-
+    """This class is used for Instrument Studio export configuration."""
+    def __init__(self, isconfigpath):
+        """Create and return device control session using Instrument Studio export configuration.
+         
+        IS export configuration contains the register map and hardware configuration
+        for Device Control.
+        
+        Args:
+            isconfigpath : the isconfig path.
         """
         self.semidevicecontrol_main = None
         self.semidevicecontrol_session = None
@@ -72,7 +68,7 @@ class SemiconductorDeviceControl:
         try:
             self.semidevicecontrol_main = SemiDeviceControlMain()
             self.semidevicecontrol_session = (
-                self.semidevicecontrol_main.CreateSemiDeviceControlSession(ISconfigpath)
+                self.semidevicecontrol_main.CreateSemiDeviceControlSession(isconfigpath)
             )
 
         except Exception as e:
@@ -80,9 +76,9 @@ class SemiconductorDeviceControl:
             raise e
 
     def start(self):
-        """
-        Starts the Instrument/Hardware sessions configured for the device
-        control, through the IS export configuration.
+        """Starts the Instrument/Hardware sessions configured for the device control.
+        
+        Through the IS export configuration.
         """
         try:
             self.semidevicecontrol_session.Start()
@@ -92,10 +88,7 @@ class SemiconductorDeviceControl:
             raise e
 
     def stop(self):
-        """
-        Stops the Instrument/Hardware sessions configured for the
-        device control
-        """
+        """Stops the Instrument/Hardware sessions configured for the device control."""
         try:
             self.semidevicecontrol_session.Stop()
 
@@ -104,9 +97,9 @@ class SemiconductorDeviceControl:
             raise e
 
     def destroy(self):
-        """
-        Destroys the device control session and deallocates the reserved
-        reference and data in memory
+        """Destroys the device control session and deallocates the reserved reference.
+        
+        And data in memory.
         """
         try:
             self.semidevicecontrol_main.DestroySemiDeviceControlSession(
@@ -120,15 +113,15 @@ class SemiconductorDeviceControl:
     # ---------------------------- Register Device ----------------------------
 
     def write_register_by_name_device(self, register_uid, register_data):
-        """
-        Writes the data to the device using the register unique name.
+        """Writes the data to the device using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        Arguments:
-            register_uid {string}
-            register_data {int}
+        Args:
+            register_uid: string register uid
+            register_data: int register data
 
         """
         try:
@@ -143,20 +136,17 @@ class SemiconductorDeviceControl:
     def write_multi_register_by_name_device(
         self, register_uid_list, register_data_list
     ):
-        """
-        Writes data to multiple registers on the device using the register
-        unique name.
+        """Writes data to multiple registers on the device using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        For each Register UID element, the corresponding element from the data
-        array will be applied.
+        For each Register UID element,the corresponding element from the data array will be applied.
 
-        Arguments:
-            register_uid_list {list of string}
-            register_data_list {list of int}
-
+        Args:
+            register_uid_list: {list of string}
+            register_data_list: {list of int}
         """
         try:
             self.semidevicecontrol_session.WriteMultipleRegistersByName_Device(
@@ -170,19 +160,16 @@ class SemiconductorDeviceControl:
     def write_register_by_address_device(
         self, ip_block_name, register_address, register_data
     ):
-        """
-        Writes the data to the device using the register address and
-        IP block name.
+        """Writes the data to the device using the register address and IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        Arguments:
-            ip_block_name {string}
-            register_address {int}
-            register_data {int}
-
+        Argus:
+            ip_block_name: {string} ip black name
+            register_address: {int} register address
+            register_data: {int} register data
         """
         try:
             self.semidevicecontrol_session.WriteRegisterByAddress_Device(
@@ -196,22 +183,21 @@ class SemiconductorDeviceControl:
     def write_multi_register_by_address_device(
         self, ip_block_name_list, register_address_list, register_data_list
     ):
-        """
-        Writes data to multiple registers on the device, using the register
-        address and IP block name.
+        """Write data to multiple registers on the device, using the register address.
+        
+        And IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        For each Register address & IP block element, the corresponding element
-        from the data array will be applied.
+        For each Register address & IP block element, the corresponding element.
+        From the data array will be applied.
 
-        Arguments:
-            ip_block_name_list {list of string}
-            register_address_list {list of int}
-            register_data_list {list of int}
-
+        Args:
+            ip_block_name_list: list of string
+            register_address_list: list of int
+            register_data_list: list of int
         """
         try:
             self.semidevicecontrol_session.WriteMultipleRegistersByAddress_Device(
@@ -231,10 +217,11 @@ class SemiconductorDeviceControl:
         interface_name,
         protocol_name,
     ):
-        """
-        Writes the data using the register address and register size to the device with the given interface and protocol.
+        """Writes the data using the register address and register size to the device.
+        
+        With the given interface and protocol.
 
-                Register address: Address of the register.
+        Register address: Address of the register.
 
         Address size: Size of the address.
 
@@ -244,13 +231,13 @@ class SemiconductorDeviceControl:
 
         Protocol name: Name of the protocol to use.
 
-        Arguments:
-            register_address {int}
-            address_size {int}
-            register_data {int}
-            register_size {int}
-            interface_name {string}
-            protocol_name {string}
+        Args:
+            register_address: {int}
+            address_size: {int}
+            register_data: {int}
+            register_size: {int}
+            interface_name: {string}
+            protocol_name: {string}
         """
         try:
             self.semidevicecontrol_session.WriteCustomRegisterByAddress_Device(
@@ -266,16 +253,17 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_register_by_name_device(self, register_uid):
-        """
-        Reads the data from the device using the register unique name.
+        """Reads the data from the device using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        Arguments:
-            register_uid {string}
+        Args:
+            register_uid : {string}
+            
         Returns:
-            register_data {int}
+            register_data : {int}
         """
         try:
             register_data = self.semidevicecontrol_session.ReadRegisterByName_Device(
@@ -288,20 +276,20 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_multi_register_by_name_device(self, register_uid_list):
-        """
-        Reads data from multiple registers on the device using the register
-        unique name.
+        """Reads data from multiple registers on the device using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        For each Register UID element, the corresponding element from the data
-        array will be applied.
+        For each Register UID element, the corresponding element from the data.
+        Array will be applied.
 
-        Arguments:
-            register_uid_list {list of string}
+        Args:
+            register_uid_list : {list of string}
+            
         Returns:
-            register_data_list {list of int}
+            register_data_list : {list of int}
         """
         try:
             register_data_list = (
@@ -316,19 +304,18 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_register_by_address_device(self, ip_block_name, register_address):
-        """
-        Reads the data from the device using the register address and
-        IP block name
+        """Reads the data from the device using the register address and IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        Arguments:
-            ip_block_name {string}
-            register_address {int}
+        Args:
+            ip_block_name : {string}
+            register_address : {int}
+            
         Returns:
-            register_data {int}
+            register_data : {int}
         """
         try:
             register_data = self.semidevicecontrol_session.ReadRegisterByAddress_Device(
@@ -343,22 +330,24 @@ class SemiconductorDeviceControl:
     def read_multi_register_by_address_device(
         self, ip_block_name_list, register_address_list
     ):
-        """
-        Reads data from multiple registers on the device using the register
-        address and IP block name.
+        """Reads data from multiple registers on the device using the register address.
+        
+        And IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        For each Register address & IP block element, the corresponding
-        element from the data array will be applied.
+        For each Register address & IP block element, the corresponding.
+        
+        Element from the data array will be applied.
 
-        Arguments:
-            ip_block_name_list {list of string}
-            register_address_list {list of int}
+        Args:
+            ip_block_name_list : {list of string}
+            register_address_list : {list of int}
+            
         Returns:
-            register_data_list {list of int}
+            register_data_list : {list of int}
         """
         try:
             register_data_list = (
@@ -380,10 +369,11 @@ class SemiconductorDeviceControl:
         interface_name,
         protocol_name,
     ):
-        """
-        Reads the data using the register address and register size from the device with the given interface and protocol.
+        """Reads the data using the register address and register size from the device.
+        
+        With the given interface and protocol.
 
-                Register address: Address of the register.
+        Register address: Address of the register.
 
         Address size: Size of the address.
 
@@ -394,13 +384,14 @@ class SemiconductorDeviceControl:
         Protocol name: Name of the protocol to use.
 
         Arguments:
-            register_address {int}
-            address_size {int}
-            register_size {int}
-            interface_name {string}
-            protocol_name {string}
+            register_address: {int}
+            address_size: {int}
+            register_size: {int}
+            interface_name: {string}
+            protocol_name: {string}
+            
         Returns:
-            register_data {int}
+            register_data: {int}
         """
         try:
             register_data = (
@@ -419,13 +410,11 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_register_addresses(self):
-        """
-        Gets the list of unique ID and Register addresses
+        """Gets the list of unique ID and Register addresses.
 
         Returns:
-            register_uid_list {list of string}
-            register_address_list {list of int}
-
+            register_uid_list: {list of string}
+            register_address_list: {list of int
         """
         try:
             register_details = self.semidevicecontrol_session.GetRegisterAddresses()
@@ -442,16 +431,15 @@ class SemiconductorDeviceControl:
 
     # ----------------------------- Field Device -----------------------------
     def write_field_by_name_device(self, field_uid, field_data):
-        """
-        Writes the data to the device using the field unique name.
+        """ Writes the data to the device using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        Arguments:
-            field_uid {string}
-            field_data {int}
-
+        Args:
+            field_uid: {string}
+            field_data :{int}
         """
         try:
             self.semidevicecontrol_session.WriteFieldByName_Device(
@@ -463,20 +451,19 @@ class SemiconductorDeviceControl:
             raise e
 
     def write_multi_field_by_name_device(self, field_uid_list, field_data_list):
-        """
-        Writes data to multiple fields on the device using the field unique
-        name.
+        """Writes data to multiple fields on the device using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        For each Field UID element, the corresponding element from the data
-        array will be applied.
+        For each Field UID element, the corresponding element from the data.
+        
+        Array will be applied.
 
-        Arguments:
-            field_uid_list {list of string}
-            field_data_list {list of int}
-
+        Args:
+            field_uid_list: {list of string}
+            field_data_list: {list of int}
         """
         try:
             self.semidevicecontrol_session.WriteMultipleFieldsByName_Device(
@@ -488,21 +475,23 @@ class SemiconductorDeviceControl:
             raise e
 
     def write_field_by_value_definition_device(self, field_uid, value_definition):
-        """
-        Writes the data to the device using the field unique name and
-        field value definition.
+        """Write the data to the device using the field unique name.
+        
+        And field value definition.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
         Value Definition: This is defined in the register map for each field.
-        Each value of the field can contain a definition string,
-        that represents the value.
+        
+        Each value of the field can contain a definition string.
+        
+        That represents the value.
 
-        Arguments:
-            field_uid {string}
-            value_definition {string}
-
+        Args:
+            field_uid: {string}
+            value_definition: {string}
         """
         try:
             self.semidevicecontrol_session.WriteFieldByValueDefinition_Device(
@@ -514,16 +503,17 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_field_by_name_device(self, field_uid):
-        """
-        Reads the data from the device using the field unique name.
+        """Reads the data from the device using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        Arguments:
-            field_uid {string}
+        Args:
+            field_uid: {string}
+            
         Returns:
-            field_data {int}
+            field_data: {int}
         """
         try:
             field_data = self.semidevicecontrol_session.ReadFieldByName_Device(
@@ -536,20 +526,21 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_multi_field_by_name_device(self, field_uid_list):
-        """
-        Reads data from multiple fields on the device using the field unique
-        name.
+        """Reads data from multiple fields on the device using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        For each Field UID element, the corresponding element from the data
-        array will be applied.
+        For each Field UID element, the corresponding element from the data.
+        
+        Array will be applied.
 
         Arguments:
-            field_uid_list {list of string}
+            field_uid_list: {list of string}
+            
         Returns:
-            field_data_list {list of int}
+            field_data_list: {list of int}
         """
         try:
             field_data_list = (
@@ -564,11 +555,10 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_field_definition_details(self, field_uid):
-        """
-        Gets the field display values, field values and field size for given unique ID
+        """Gets the field display values, field values and field size for given unique ID.
 
         Arguments:
-            field_uid {string}
+            field_uid: {string}
 
         Returns:
             field_display_values {list of string}
@@ -592,16 +582,15 @@ class SemiconductorDeviceControl:
 
     # ---------------------------- Register Cache ----------------------------
     def write_register_by_name_cache(self, register_uid, register_data):
-        """
-        Writes the data to the cache using the register unique name.
+        """Writes the data to the cache using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        Arguments:
-            register_uid {string}
-            register_data {int}
-
+        Args:
+            register_uid: {string}
+            register_data: {int}
         """
         try:
             self.semidevicecontrol_session.WriteRegisterByName_Cache(
@@ -613,20 +602,19 @@ class SemiconductorDeviceControl:
             raise e
 
     def write_multi_register_by_name_cache(self, register_uid_list, register_data_list):
-        """
-        Writes data to multiple registers on the cache using the register
-        unique name.
+        """Writes data to multiple registers on the cache using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        For each Register UID element, the corresponding element from the data
-        array will be applied.
+        For each Register UID element, the corresponding element from the data.
+        
+        Array will be applied.
 
         Arguments:
-            register_uid_list {list of string}
-            register_data_list {list of int}
-
+            register_uid_list: {list of string}
+            register_data_list: {list of int}
         """
         try:
             self.semidevicecontrol_session.WriteMultipleRegistersByName_Cache(
@@ -640,19 +628,16 @@ class SemiconductorDeviceControl:
     def write_register_by_address_cache(
         self, ip_block_name, register_address, register_data
     ):
-        """
-        Writes the data to the cache using the register address and
-        IP block name.
+        """Writes the data to the cache using the register address and IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
         Arguments:
-            ip_block_name {string}
-            register_address {int}
-            register_data {int}
-
+            ip_block_name: {string}
+            register_address: {int}
+            register_data: {int}
         """
         try:
             self.semidevicecontrol_session.WriteRegisterByAddress_Cache(
@@ -666,22 +651,22 @@ class SemiconductorDeviceControl:
     def write_multi_register_by_address_cache(
         self, ip_block_name_list, register_address_list, register_data_list
     ):
-        """
-        Writes data to multiple registers on the cache using the register
-        address and IP block name.
+        """Writes data to multiple registers on the cache using the register.
+        
+        Address and IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        For each Register address & IP block element, the corresponding
-        element from the data array will be applied.
+        For each Register address & IP block element, the corresponding.
+        
+        Element from the data array will be applied.
 
         Arguments:
-            ip_block_name_list {list of string}
-            register_address_list {list of int}
-            register_data_list {list of int}
-
+            ip_block_name_list: {list of string}
+            register_address_list: {list of int}
+            register_data_list: {list of int}
         """
         try:
             self.semidevicecontrol_session.WriteMultipleRegistersByAddress_Cache(
@@ -693,16 +678,17 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_register_by_name_cache(self, register_uid):
-        """
-        Reads the data from the cache using the register unique name.
+        """Reads the data from the cache using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        Arguments:
-            register_uid {string}
+        Args:
+            register_uid: {string}
+            
         Returns:
-            register_data {int}
+            register_data :{int}
         """
         try:
             register_data = self.semidevicecontrol_session.ReadRegisterByName_Cache(
@@ -715,20 +701,21 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_multi_register_by_name_cache(self, register_uid_list):
-        """
-        Reads data from multiple registers on the cache using the register
-        unique name.
+        """Reads data from multiple registers on the cache using the register unique name.
 
-        Register UID: Unique name for the register in the format
-        <IP block/Device name>-<Register group>-<Register name>
+        Register UID: Unique name for the register in the format.
+        
+        <IP block/Device name>-<Register group>-<Register name>.
 
-        For each Register UID element, the corresponding element from the data
-        array will be applied.
+        For each Register UID element, the corresponding element from the data.
+        
+        Array will be applied.
 
         Arguments:
-            register_uid_list {list of string}
+            register_uid_list: {list of string}
+            
         Returns:
-            register_data_list {list of int}
+            register_data_list: {list of int}
         """
         try:
             register_data_list = (
@@ -743,19 +730,18 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_register_by_address_cache(self, ip_block_name, register_address):
-        """
-        Reads the data from the cache using the register address and
-        IP block name.
+        """Reads the data from the cache using the register address and IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        Arguments:
-            ip_block_name {string}
-            register_address {int}
+        Args:
+            ip_block_name: {string}
+            register_address: {int}
+            
         Returns:
-            register_data {int}
+            register_data :{int}
         """
         try:
             register_data = self.semidevicecontrol_session.ReadRegisterByAddress_Cache(
@@ -770,22 +756,24 @@ class SemiconductorDeviceControl:
     def read_multi_register_by_address_cache(
         self, ip_block_name_list, register_address_list
     ):
-        """
-        Reads data from multiple registers on the cache using the register
-        address and IP block name.
+        """Reads data from multiple registers on the cache using the register.
+        
+        Address and IP block name.
 
-        Register address: Address of the register from register map
+        Register address: Address of the register from register map.
 
-        IP block name: Name of the IP block or Device from register map
+        IP block name: Name of the IP block or Device from register map.
 
-        For each Register address & IP block element, the corresponding
-        element from the data array will be applied.
+        For each Register address & IP block element, the corresponding.
+        
+        Element from the data array will be applied.
 
-        Arguments:
-            ip_block_name_list {list of string}
-            register_address_list {list of int}
+        Args:
+            ip_block_name_list: {list of string}
+            register_address_list: {list of int}
+            
         Returns:
-            register_data_list {list of int}
+            register_data_list: {list of int}
         """
         try:
             register_data_list = (
@@ -804,16 +792,15 @@ class SemiconductorDeviceControl:
     # ----------------------------- Field Cache -----------------------------
 
     def write_field_by_name_cache(self, field_uid, field_data):
-        """
-        Writes the data to the cache using the field unique name.
+        """Writes the data to the cache using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        Arguments:
-            field_uid {string}
-            field_data {int}
-
+        Args:
+            field_uid: {string}
+            field_data: {int}
         """
         try:
             self.semidevicecontrol_session.WriteFieldByName_Cache(field_uid, field_data)
@@ -823,20 +810,19 @@ class SemiconductorDeviceControl:
             raise e
 
     def write_multi_field_by_name_cache(self, field_uid_list, field_data_list):
-        """
-        Writes data to multiple fields on the cache using the fields
-        unique name.
+        """Writes data to multiple fields on the cache using the fields unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        For each Field UID element, the corresponding element from the data
-        array will be applied.
+        For each Field UID element, the corresponding element from the data.
+        
+        Array will be applied.
 
-        Arguments:
-            field_uid_list {list of string}
-            field_data_list {list of int}
-
+        Args:
+            field_uid_list: {list of string}
+            field_data_list: {list of int}
         """
         try:
             self.semidevicecontrol_session.WriteMultipleFieldsByName_Cache(
@@ -848,21 +834,23 @@ class SemiconductorDeviceControl:
             raise e
 
     def write_field_by_value_definition_cache(self, field_uid, value_definition):
-        """
-        Writes the data to the cache using the field unique name and
-        field value definition.
+        """Writes the data to the cache using the field unique name.
+        
+        And field value definition.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
         Value Definition: This is defined in the register map for each field.
-        Each value of the field can contain a definition string,
-        that represents the value.
+        
+        Each value of the field can contain a definition string.
+        
+        That represents the value.
 
-        Arguments:
-            field_uid {string}
-            value_definition {string}
-
+        Args:
+            field_uid: {string}
+            value_definition: {string}
         """
         try:
             self.semidevicecontrol_session.WriteFieldByValueDefinition_Cache(
@@ -874,16 +862,17 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_field_by_name_cache(self, field_uid):
-        """
-        Read the data from the cache using the field unique name.
+        """Read the data from the cache using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        Arguments:
-            field_uid {string}
+        Args:
+            field_uid: {string}
+            
         Returns:
-            field_data {int}
+            field_data: {int}
         """
         try:
             field_data = self.semidevicecontrol_session.ReadFieldByName_Cache(field_uid)
@@ -894,20 +883,21 @@ class SemiconductorDeviceControl:
             raise e
 
     def read_multi_field_by_name_cache(self, field_uid_list):
-        """
-        Reads data from multiple fields on the cache using the field
-        unique name.
+        """Reads data from multiple fields on the cache using the field unique name.
 
-        Field UID: Unique name for the field in the format
-        <IP block/Device name>-<Register group>-<Field name>
+        Field UID: Unique name for the field in the format.
+        
+        <IP block/Device name>-<Register group>-<Field name>.
 
-        For each Field UID element, the corresponding element from the data
-        array will be applied.
+        For each Field UID element, the corresponding element from the data.
+        
+        Array will be applied.
 
-        Arguments:
-            field_uid_list {list of string}
+        Args:
+            field_uid_list: {list of string}
+            
         Returns:
-            field_data_list {list of int}
+            field_data_list: {list of int}
         """
         try:
             field_data_list = (
@@ -924,12 +914,12 @@ class SemiconductorDeviceControl:
     # ----------------------------- Field Cache -----------------------------
 
     # -------------------------------- Cache --------------------------------
-
     def write_from_cache_to_device(self):
-        """
-        Writes all the cache register data to the device, in the order it is
-        stored in the cache memory. The cache will be auto cleared after
-        this operation.
+        """ Writes all the cache register data to the device, in the order.
+        
+        It is stored in the cache memory. The cache will be auto cleared.
+        
+        After this operation.
         """
         try:
             self.semidevicecontrol_session.WriteFromCacheToDevice()
@@ -939,9 +929,7 @@ class SemiconductorDeviceControl:
             raise e
 
     def clear_cache(self):
-        """
-        Clears all the cache register data from the device control session
-        """
+        """Clears all the cache register data from the device control session."""
         try:
             self.semidevicecontrol_session.ClearCache()
 
@@ -950,24 +938,19 @@ class SemiconductorDeviceControl:
             raise e
 
     # ------------------------------ DIO ------------------------------
-
     def read_pin_state(self, pin_name):
-        """
-        Reads the pin state (High / Low / Terminate) using the Pin name
-        defined in the register map.
+        """Reads the pin state (High / Low / Terminate) using the Pin name.
+        
+        Defined in the register map.
+        
+        Pin State corresponding int values.2-Terminate, 1=High, 0-Low.
 
-        Arguments:
-            pin_name {string}
+        Args:
+            pin_name: {string}
+            
         Return:
-            pin_state {int}
-
-
-        Pin State corresponding int values
-        2-Terminate
-        1=High
-        0-Low
+            pin_state: {int}
         """
-
         try:
             pin_state = self.semidevicecontrol_session.ReadPinState(pin_name)
             return pin_state
@@ -977,19 +960,17 @@ class SemiconductorDeviceControl:
             raise e
 
     def write_pin_state(self, pin_name, pin_state):
-        """
-        Puts the pin to High / Low / Terminate state using the Pin name
+        """Puts the pin to High / Low / Terminate state using the Pin name.
+        
         defined in the register map.
 
-        Arguments:
-            pin_name {string}
-            pin_state {int}
+        Args:
+            pin_name: {string}
+            pin_state: {int}
 
-            Pin State corresponding int values
-            2-Terminate
-            1=High
-            0-Low
-
+            Pin State corresponding int values.
+            
+            2-Terminate, 1=High, 0-Low.
         """
         try:
             self.semidevicecontrol_session.WritePinState(pin_name, pin_state)
@@ -999,21 +980,26 @@ class SemiconductorDeviceControl:
             raise e
 
     # -------------------------------- SCRIPTS ------------------------------
-
     def execute_script(self, file_name, wait_until_complete=True):
-        """
-        Executes the script using the Script Name provided as a input.
-        If a script is already running on the semi device control session, this API will throw error indicating that another script is running already.
-        Using waitUntilScriptCompletion bool control, developer can configure this API to run the script as a blocking call or run asynchronously.
+        """Executes the script using the Script Name provided as a input.
+        
+        If a script is already running on the semi device control session.
+        
+        This API will throw error indicating that another script is running already.
+        
+        Using waitUntilScriptCompletion bool control, developer can configure.
+        
+        This API to run the script as a blocking call or run asynchronously.
 
-        Arguments:
-            file_name {string}
-            wait_until_complete {bool}
+        Args:
+            file_name: {string}
+            wait_until_complete: {bool}
 
         Returns:
-            Array of string, each  string is the result of the command executed from the script in JSON format {list of string}
+            Array of string, each  string is the result of the command.
+            
+            Executed from the script in JSON format {list of string}
         """
-
         try:
             return self.semidevicecontrol_session.ExecuteScript(
                 file_name, wait_until_complete
@@ -1024,19 +1010,23 @@ class SemiconductorDeviceControl:
             raise e
 
     def execute_script_command(self, script_string, wait_until_complete=True):
-        """
-        Executes the Script String provided as the input to the API.
+        """Executes the Script String provided as the input to the API.
+        
         If the Script String is invalid, error will be thrown, and execution will be skipped.
-        If waitUntilComplete? is True, then the API will wait until the script is executed, else the API will run the script asynchronously and stop.
+        
+        If waitUntilComplete? is True, then the API will wait until the script is executed.
+        
+        Else the API will run the script asynchronously and stop.
 
-        Arguments:
-            script_string {string}
-            wait_until_complete {bool}
+        Args:
+            script_string :{string}
+            wait_until_complete: {bool}
 
         Returns:
-            Array of string, each  string is the result of the command executed from the script in JSON format {list of string}
+            Array of string, each  string is the result of the command.
+            
+            Executed from the script in JSON format {list of string}.
         """
-
         try:
             return self.semidevicecontrol_session.ExecuteScriptCommand(
                 script_string, wait_until_complete
@@ -1047,10 +1037,7 @@ class SemiconductorDeviceControl:
             raise e
 
     def abort_script(self):
-        """
-        Abort Script will abort the currently running script on the semi device control session.
-        """
-
+        """Abort Script will abort the current running script on the semi device control session."""
         try:
             self.semidevicecontrol_session.AbortScript()
 
@@ -1059,15 +1046,12 @@ class SemiconductorDeviceControl:
             raise e
 
     # -------------------------------- UTILS --------------------------------
-
     def get_logs(self):
-        """
-        Get log details
+        """Get log details.
 
         Returns:
             logs {2d array of strings}
         """
-
         try:
             logs = self.semidevicecontrol_session.GetLogs()
             return logs
@@ -1077,10 +1061,7 @@ class SemiconductorDeviceControl:
             raise e
 
     def reset_to_default_state(self):
-        """
-        Reset the device software register values and dio states to default.
-        """
-
+        """Reset the device software register values and dio states to default."""
         try:
             self.semidevicecontrol_session.ResetToDefaultState()
 
@@ -1089,13 +1070,11 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_script_names(self):
-        """
-        Gets the list of script file names available in the source folder location
+        """Gets the list of script file names available in the source folder location.
 
         Return:
             script_names {list of strings}
         """
-
         try:
             script_names = self.semidevicecontrol_session.GetScriptFileName()
             return script_names
@@ -1105,18 +1084,16 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_protocol_dynamic_setting(self, interface_name, protocol_name, setting_name):
-        """
-        Gets the dynamic protocol setting value of the protocol setting
+        """Gets the dynamic protocol setting value of the protocol setting.
 
-        Arguments:
-            interface_name {string}
-            protocol_name {string}
-            setting_name {string}
+        Args:
+            interface_name: {string}
+            protocol_name: {string}
+            setting_name: {string}
 
         Return:
             setting_value {string}
         """
-
         try:
             return self.semidevicecontrol_session.GetProtocolDynamicSetting(
                 interface_name, protocol_name, setting_name
@@ -1129,16 +1106,14 @@ class SemiconductorDeviceControl:
     def set_protocol_dynamic_setting(
         self, interface_name, protocol_name, setting_name, setting_value
     ):
-        """
-        Updates the dynamic protocol settings of the protocol
+        """Updates the dynamic protocol settings of the protocol.
 
-        Arguments:
-            interface_name {string}
-            protocol_name {string}
-            setting_name {string}
-            setting_value {string}
+        Args:
+            interface_name: {string}
+            protocol_name: {string}
+            setting_name: {string}
+            setting_value: {string}
         """
-
         try:
             self.semidevicecontrol_session.SetProtocolDynamicSetting(
                 interface_name, protocol_name, setting_name, setting_value
@@ -1149,17 +1124,15 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_interface_dynamic_setting(self, interface_name, setting_name):
-        """
-        Gets the dynamic interface setting value of the interface setting
+        """Gets the dynamic interface setting value of the interface setting.
 
-        Arguments:
-            interface_name {string}
-            setting_name {string}
+        Args:
+            interface_name: {string}
+            setting_name: {string}
 
         Return:
-            setting_value {string}
+            setting_value: {string}
         """
-
         try:
             return self.semidevicecontrol_session.GetInterfaceDynamicSetting(
                 interface_name, setting_name
@@ -1172,15 +1145,13 @@ class SemiconductorDeviceControl:
     def set_interface_dynamic_setting(
         self, interface_name, setting_name, setting_value
     ):
-        """
-        Updates the dynamic interface setting value of the interface setting
+        """Updates the dynamic interface setting value of the interface setting.
 
-        Arguments:
-            interface_name {string}
-            setting_name {string}
-            setting_value {string}
+        Args:
+            interface_name: {string}
+            setting_name: {string}
+            setting_value: {string}
         """
-
         try:
             self.semidevicecontrol_session.SetInterfaceDynamicSetting(
                 interface_name, setting_name, setting_value
@@ -1191,12 +1162,11 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_instrument_session(self, interface_name):
-        """
-        Gets the session ID of the instrument
+        """Gets the session ID of the instrument.
+        
         Return:
             int {session ID}
         """
-
         try:
             return self.semidevicecontrol_session.GetInterfaceSessionID(interface_name)
 
@@ -1205,14 +1175,12 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_interface_details(self):
-        """
-        Gets the list of interface name and interface type
+        """Gets the list of interface name and interface type.
 
         Return:
             interface_name_list {list of string}
             interface_type_list {list of string}
         """
-
         try:
             interface_details = self.semidevicecontrol_session.GetInterfaceDetails()
             interface_name_list = list(
@@ -1228,16 +1196,16 @@ class SemiconductorDeviceControl:
             raise e
 
     def get_script_string(self, script_name):
-        """
-        This API provides the Script String and IsScriptFileValid status from Device Control session for the given the Script Name input.
+        """API provides the Script String and IsScriptFileValid status from Device Control session.
+        
+        For the given the Script Name input.
 
-        Arguments:
-            script_name {string}
+        Args:
+            script_name: {string}
 
         Return:
             Tuple { bool - IsScriptValid, string - ScriptContent}
         """
-
         try:
             script_detail = self.semidevicecontrol_session.GetScriptString(script_name)
             return script_detail.IsScriptValid, script_detail.ScriptContent
@@ -1247,17 +1215,20 @@ class SemiconductorDeviceControl:
             raise e
 
     def generate_device_elements(self, directory=""):
-        """
-        This API generates a class file in the specified directory that contains the register and field elements from the
-        register map configured in the sdcconfig file. If the directory provided is empty, the file will be created in the working directory
+        """This API generates a class file in the specified directory.
+        
+        That contains the register and field elements from the register map.
+        
+        Configured in the sdcconfig file. 
+        
+        If the directory provided is empty, the file will be created in the working directory.
 
-        Arguments:
-            directory {string}
+        Args:
+            directory: {string}
 
         Return:
             string - The path where the file is created
         """
-
         try:
             if directory == "":
                 directory = os.getcwd()
