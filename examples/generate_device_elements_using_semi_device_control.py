@@ -1,17 +1,16 @@
-"""Overview: Demonstrates how to use the "generate_device_elements" API to generate.
+"""Overview:.
 
+Demonstrates how to use the "generate_device_elements" API to generate
 the class file that contains all the device elements.
 
 Requirement: Python full development system.
-
-Instructions: 1. Run this python code.
-
+Instructions:
+1. Run this python code.
 2. Use the python file generated to easily access the register and field names.
 """
 
 import os
 import sys
-import time
 
 
 # To add the directory of the source file(nisemidevicecontrol.py) when the
