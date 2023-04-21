@@ -1,6 +1,10 @@
+"""This file contains registers and field info."""
 class Register:
+    """This class contains all register info."""
     class LPS22HH:
-        class Control_Register:
+        """This class contains LPS22HH registers info."""
+        class ControlRegister:
+            """"This class contains different registers info present in LPS22H."""
             INTERRUPT_CFG = "LPS22HH-Control_Register-INTERRUPT_CFG"
             THS_P_L = "LPS22HH-Control_Register-THS_P_L"
             THS_P_H = "LPS22HH-Control_Register-THS_P_H"
@@ -17,7 +21,8 @@ class Register:
             RPDS_L = "LPS22HH-Control_Register-RPDS_L"
             RPDS_H = "LPS22HH-Control_Register-RPDS_H"
 
-        class Sensor_Register:
+        class SensorRegister:
+            """This class contains sensor registers info."""
             INT_SOURCE = "LPS22HH-Sensor_Register-INT_SOURCE"
             FIFO_STATUS1 = "LPS22HH-Sensor_Register-FIFO_STATUS1"
             FIFO_STATUS2 = "LPS22HH-Sensor_Register-FIFO_STATUS2"
@@ -28,7 +33,8 @@ class Register:
             TEMP_OUT_L = "LPS22HH-Sensor_Register-TEMP_OUT_L"
             TEMP_OUT_H = "LPS22HH-Sensor_Register-TEMP_OUT_H"
 
-        class FIFO_Register:
+        class FifoRegister:
+            """This class contains FIFO registers info."""
             FIFO_DATA_OUT_PRESS_XL = "LPS22HH-FIFO_Register-FIFO_DATA_OUT_PRESS_XL"
             FIFO_DATA_OUT_PRESS_L = "LPS22HH-FIFO_Register-FIFO_DATA_OUT_PRESS_L"
             FIFO_DATA_OUT_PRESS_H = "LPS22HH-FIFO_Register-FIFO_DATA_OUT_PRESS_H"
@@ -37,8 +43,11 @@ class Register:
 
 
 class Field:
+    """This class contains field info."""
     class LPS22HH:
-        class Control_Register:
+        """This class contains LPS22HH field info."""
+        class ControlRegister:
+            """This class contains different field info in LPS22HH register."""
             AUTOREFP = "LPS22HH-Control_Register-AUTOREFP"
             RESET_ARP = "LPS22HH-Control_Register-RESET_ARP"
             AUTOZERO = "LPS22HH-Control_Register-AUTOZERO"
@@ -87,7 +96,8 @@ class Field:
             RESERVED_7 = "LPS22HH-Control_Register-RESERVED_7"
             RESERVED_8 = "LPS22HH-Control_Register-RESERVED_8"
 
-        class Sensor_Register:
+        class SensorRegister:
+            """This class contains sensor register pin info."""
             BOOT_ON = "LPS22HH-Sensor_Register-BOOT_ON"
             IA = "LPS22HH-Sensor_Register-IA"
             PL = "LPS22HH-Sensor_Register-PL"
@@ -106,6 +116,7 @@ class Field:
             POUT = "LPS22HH-Sensor_Register-POUT"
             TOUT = "LPS22HH-Sensor_Register-TOUT"
 
-        class FIFO_Register:
+        class FifoRegister:
+            """"This class contains FIFO registers pin info."""
             FIFO_P = "LPS22HH-FIFO_Register-FIFO_P"
             FIFO_T = "LPS22HH-FIFO_Register-FIFO_T"

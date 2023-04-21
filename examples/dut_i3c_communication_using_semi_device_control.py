@@ -1,12 +1,12 @@
-"""
-Overview: Demonstrates how to use the Semi Device Control APIs to establish
-communication sequence with the DUT using I3C protocol
-Requirement: Python full development system
+"""Overview: Demonstrates how to use the Semi Device Control APIs to establish.
 
-Instructions:
-    1. Run this python code
-    2. View the read register value being printed in the terminal for each
-    iteration
+communication sequence with the DUT using I3C protocol.
+
+Requirement: Python full development system.
+
+Instructions: 1. Run this python code.
+
+2. View the read register value being printed in the terminal for each iteration.
 """
 
 import os
@@ -65,11 +65,7 @@ try:
     )
     print(hex(reg_data))
 
-    """
-    CCC Types corresponding int values
-    1=Direct
-    0=Broadcast
-    """
+    """CCC Types corresponding int values. 1=Direct ,0=Broadcast."""
 
     SETDASA_command = 135
     GETPID_command = 141

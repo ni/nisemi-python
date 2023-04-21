@@ -1,12 +1,12 @@
-"""
-Overview: Demonstrates how to use the Semi Device Control APIs to establish
-communication sequence with the DUT using scripts
-Requirement: Python full development system
+"""Overview: Demonstrates how to use the Semi Device Control APIs to establish.
 
-Instructions:
-    1. Run this python code
-    2. View the read register value being printed in the terminal for each
-    iteration
+Communication sequence with the DUT using scripts.
+
+Requirement: Python full development system.
+
+Instructions: 1. Run this python code.
+
+2. View the read register value being printed in the terminal for each iteration.
 """
 
 import os

@@ -1,17 +1,20 @@
-"""
-Overview: Demonstrates how to use the Semi Device Control APIs to establish
-communication sequence with the DUT
+"""Overview: Demonstrates how to use the Semi Device Control APIs to establish.
+
+communication sequence with the DUT.
+
 Requirement: Python full development system
 
-Instructions:
-    1. Run this python code
-    2. View the read register value being printed in the terminal for each
+Instructions: 1. Run this python code.
+
+2. View the read register value being printed in the terminal for each
     iteration
 """
 
 import os
 import sys
 import time
+
+import nisdc_device_elements
 
 # To add the directory of the source file(nisemidevicecontrol.py) when the
 # example is opened from the examples folder or the top level folder
@@ -20,7 +23,7 @@ sys.path.append(os.getcwd())
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nisdc.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
-import nisdc_device_elements
+
 
 # Get Instrument Studio Configuration
 ISconfigpath = os.path.join(
@@ -39,12 +42,7 @@ try:
     semi_device_control.start()
 
     # Using the DIO APIs to control Board/Device Pins
-    """
-    Pin State corresponding int values
-    2-Terminate
-    1-High
-    0-Low
-    """
+    """Pin State corresponding int values. 2-Terminate, 1-High, 0-Low."""
 
     semi_device_control.write_pin_state("Vdd", 1)
     semi_device_control.write_pin_state("Vdd_IO", 1)
