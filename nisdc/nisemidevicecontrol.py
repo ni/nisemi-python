@@ -76,9 +76,9 @@ class SemiconductorDeviceControl:
             raise e
 
     def start(self):
-        """Starts the Instrument/Hardware sessions configured for the device control.
+        """Starts the Instrument/Hardware sessions.
         
-        Through the IS export configuration.
+        It is configured for the device control through the IS export configuration.
         """
         try:
             self.semidevicecontrol_session.Start()
@@ -97,9 +97,9 @@ class SemiconductorDeviceControl:
             raise e
 
     def destroy(self):
-        """Destroys the device control session and deallocates the reserved reference.
+        """Destroys the device control session.
         
-        And data in memory.
+        Deallocates the reserved reference and data in memory.
         """
         try:
             self.semidevicecontrol_main.DestroySemiDeviceControlSession(
@@ -166,7 +166,7 @@ class SemiconductorDeviceControl:
 
         IP block name: Name of the IP block or Device from register map.
 
-        Argus:
+        Args:
             ip_block_name: {string} ip black name
             register_address: {int} register address
             register_data: {int} register data
@@ -191,8 +191,8 @@ class SemiconductorDeviceControl:
 
         IP block name: Name of the IP block or Device from register map.
 
-        For each Register address & IP block element, the corresponding element.
-        From the data array will be applied.
+        For each Register address & IP block element, the corresponding element
+        from the data array will be applied.
 
         Args:
             ip_block_name_list: list of string
@@ -217,9 +217,9 @@ class SemiconductorDeviceControl:
         interface_name,
         protocol_name,
     ):
-        """Writes the data using the register address and register size to the device.
+        """Writes the data using the register address and register size.
         
-        With the given interface and protocol.
+           To the device with the given interface and protocol.
 
         Register address: Address of the register.
 
@@ -282,8 +282,8 @@ class SemiconductorDeviceControl:
         
         <IP block/Device name>-<Register group>-<Register name>.
 
-        For each Register UID element, the corresponding element from the data.
-        Array will be applied.
+        For each Register UID element, the corresponding element from the data
+        array will be applied.
 
         Args:
             register_uid_list : {list of string}
@@ -330,9 +330,9 @@ class SemiconductorDeviceControl:
     def read_multi_register_by_address_device(
         self, ip_block_name_list, register_address_list
     ):
-        """Reads data from multiple registers on the device using the register address.
+        """Reads data from multiple registers on the device.
         
-        And IP block name.
+        Using the register address and IP block name.
 
         Register address: Address of the register from register map.
 
@@ -532,9 +532,8 @@ class SemiconductorDeviceControl:
         
         <IP block/Device name>-<Register group>-<Field name>.
 
-        For each Field UID element, the corresponding element from the data.
-        
-        Array will be applied.
+        For each Field UID element, the corresponding element from the data
+        array will be applied.
 
         Arguments:
             field_uid_list: {list of string}
@@ -651,9 +650,9 @@ class SemiconductorDeviceControl:
     def write_multi_register_by_address_cache(
         self, ip_block_name_list, register_address_list, register_data_list
     ):
-        """Writes data to multiple registers on the cache using the register.
+        """Writes data to multiple registers on the cache.
         
-        Address and IP block name.
+        Using the register, address and IP block name.
 
         Register address: Address of the register from register map.
 
@@ -708,8 +707,7 @@ class SemiconductorDeviceControl:
         <IP block/Device name>-<Register group>-<Register name>.
 
         For each Register UID element, the corresponding element from the data.
-        
-        Array will be applied.
+        array will be applied.
 
         Arguments:
             register_uid_list: {list of string}
@@ -756,9 +754,9 @@ class SemiconductorDeviceControl:
     def read_multi_register_by_address_cache(
         self, ip_block_name_list, register_address_list
     ):
-        """Reads data from multiple registers on the cache using the register.
+        """Reads data from multiple registers on the cache.
         
-        Address and IP block name.
+        Using the register address and IP block name.
 
         Register address: Address of the register from register map.
 
@@ -1013,9 +1011,7 @@ class SemiconductorDeviceControl:
         """Executes the Script String provided as the input to the API.
         
         If the Script String is invalid, error will be thrown, and execution will be skipped.
-        
         If waitUntilComplete? is True, then the API will wait until the script is executed.
-        
         Else the API will run the script asynchronously and stop.
 
         Args:
@@ -1217,10 +1213,8 @@ class SemiconductorDeviceControl:
     def generate_device_elements(self, directory=""):
         """This API generates a class file in the specified directory.
         
-        That contains the register and field elements from the register map.
-        
-        Configured in the sdcconfig file. 
-        
+        That contains the register and field elements from the register map
+        configured in the sdcconfig file. 
         If the directory provided is empty, the file will be created in the working directory.
 
         Args:

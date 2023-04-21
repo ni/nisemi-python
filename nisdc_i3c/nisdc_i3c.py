@@ -38,11 +38,9 @@ class SemiDeviceControlI3CSession:
     def execute_dynamic_addressing_ccc(self, ccc_type, command_id, dynamic_address=-1):
         """Executes the CCC used for dynamic addressing based on the given inputs.
         
-        If for a given Command ID the dynamic address is not applicable then it will not be applied.
-        
-        And if the Command ID doesn’t match with the CCC Type.
-        
-        And CCC Operation an exception will be thrown.
+        If for a given Command ID the dynamic address is not applicable then it will not be applied
+        and if the Command ID doesn’t match with the CCC Type
+        and CCC Operation an exception will be thrown.
         
         CCC Type corresponding int values.1=Direct,0-Broadcast.
 
@@ -66,16 +64,12 @@ class SemiDeviceControlI3CSession:
         """Executes the CCC used for dynamic addressing based on the given inputs.
         
         And returns the data read back from the DUT.
-        
         This API is only applicable for the ENTDAA in the current spec.
+        If for a given Command ID the dynamic address is not applicable then it will not be applied
+        and if the Command ID doesn’t match with the CCC Type
+        and CCC Operation an exception will be thrown.
         
-        If for a given Command ID the dynamic address is not applicable then it will not be applied.
-        
-        And if the Command ID doesn’t match with the CCC Type.
-        
-        And CCC Operation an exception will be thrown.
-        
-         CCC Type corresponding int values. 1=Direct, 0-Broadcast.
+        CCC Type corresponding int values. 1=Direct, 0-Broadcast.
 
         Args:
             ccc_type: { int }
@@ -102,13 +96,10 @@ class SemiDeviceControlI3CSession:
     ):
         """Executes the write CCC commands used in SDR mode based on the given inputs.
         
-        If for a given Command ID the defining byte.
-        
-        And data are not applicable then they will be ignored.
-        
-        And if the Command ID doesn’t match with the CCC Type.
-        
-        And CCC Operation an exception will be thrown.
+        If for a given Command ID the defining byte
+        and data are not applicable then they will be ignored.
+        If the Command ID doesn’t match with the CCC Type
+        and CCC Operation an exception will be thrown.
         
         CCC Type corresponding int values. 1=Direct, 0-Broadcast.
 
@@ -133,16 +124,11 @@ class SemiDeviceControlI3CSession:
         """Executes the read CCC commands used in SDR mode based on the given inputs.
         
         And returns the read data.
-        
         If for a given Command ID the Defining Byte is not applicable then they will be ignored.
-        
-        The  read Data Length will only be considered if the value is not provided in the csv file.
-        
-        Else it will take the value from the csv file.
-        
-        And if the Command ID doesn’t match with the CCC Type.
-        
-        And CCC Operation an exception will be thrown.
+        The  read Data Length will only be considered if the value is not provided in the csv file
+        else it will take the value from the csv file.
+        and if the Command ID doesn’t match with the CCC Type
+        and CCC Operation an exception will be thrown.
         
         CCC Type corresponding int values. 1=Direct, 0-Broadcast.
 
