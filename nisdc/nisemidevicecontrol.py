@@ -76,9 +76,10 @@ class SemiconductorDeviceControl:
             raise e
 
     def start(self):
-        """Starts the Instrument/Hardware sessions.
+        """Description:.
         
-        It is configured for the device control through the IS export configuration.
+        Starts the Instrument/Hardware sessions configured for the device control
+        through the IS export configuration.
         """
         try:
             self.semidevicecontrol_session.Start()
