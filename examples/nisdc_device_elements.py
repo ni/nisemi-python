@@ -1,4 +1,5 @@
 """This file contains registers and field info."""
+# flake8: noqa
 class Register:
     """This class contains all register info."""
     class LPS22HH:
