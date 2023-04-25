@@ -4,7 +4,7 @@ import sys
 
 import clr
 
-
+# flake8: noqa
 device_control_path = "C:\\Program Files\\National Instruments\\Semi Device Control"
 
 sys.path.append(os.path.dirname(os.getcwd()))

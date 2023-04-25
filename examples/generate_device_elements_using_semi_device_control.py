@@ -8,7 +8,7 @@ Instructions:
 1. Run this python code.
 2. Use the python file generated to easily access the register and field names.
 """
-
+# flake8: noqa
 import os
 import sys
 

@@ -9,7 +9,7 @@ Instructions:.
 1. Run this python code.
 2. View the read register value being printed in the terminal for each iteration.
 """
-
+# flake8: noqa
 import os
 import sys
 import time
