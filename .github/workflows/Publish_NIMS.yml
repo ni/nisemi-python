@@ -1,4 +1,5 @@
 name:  Update docs and Publish NIMS
+
 on:
   release:
     types: [released]
