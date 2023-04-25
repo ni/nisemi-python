@@ -3,83 +3,82 @@ name:  Update docs and Publish NIMS
 on:
   release:
     types: [released]
-    
+
 concurrency: publish_to_pypi
 
 env:
   # Versions are also listed in PR.yml
   POETRY_VERSION: 1.4.2
   PYTHON_VERSION: 3.9
-  
- jobs:
-   build:
-     name: Update API reference docs and Publish NIMS Package to PyPI
-     runs-on : ubuntu-latest 
-     steps:
-       - uses: actions/checkout@v2
-       - uses: actions/setup-python@v2
-         with:
-           python-version: ${{ env.PYTHON_VERSION }}
-       - uses: Gr1N/setup-poetry@v8
+
+jobs:
+  build:
+    name: Update API reference docs and Publish NIMS Package to PyPI
+    runs-on : ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: Gr1N/setup-poetry@v8
         with:
           poetry-version: ${{ env.POETRY_VERSION }}
 
-       - name: Check for lock changes
-         run: poetry lock --check
+      - name: Check for lock changes
+        run: poetry lock --check
 
-       - uses: actions/cache@v2
-         with:
-           path: ~/.cache/pypoetry/virtualenvs
-           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+      - name: Setup NIMS
+        run: poetry install
+
+      - name: Lint NIMS
+        run: poetry run ni-python-styleguide lint
+
+      # If the tag is 0.1.0, this will set the version of NIMS package to 0.1.0
+      - name: Store version from Tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
+      - name: Update NIMS package version based on tag name.
+        run: |
+          poetry version ${{ steps.vars.outputs.tag }}
+
+      - name: Setup NIMS with docs
+        run: poetry install --with docs
+
+      - name: Update API Reference Documents(Generated using Sphinx)
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          touch docs/.nojekyll         
+          poetry run sphinx-build _docs_source docs -b html
+      - name: Commit file changes.
+        if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Promote NIMS package version and update Sphinx generated files in _docs" -a
       
-       - name: Setup NIMS
-         run: poetry install
+      - name: Push changes to the dev_23.3 branch
+        if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
+        uses: CasperWA/push-protected@v2
+        with:
+          token: ${{ secrets.ADMIN_PAT }}
+          branch: ${{ github.event.release.target_commitish }}  
+          unprotect_reviews: true
 
-       - name: Lint NIMS
-         run: poetry run ni-python-styleguide lint
-        
-     # If the tag is 0.1.0, this will set the version of NIMS package to 0.1.0
-       - name: Store version from Tag
-         id: vars
-         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-
-       - name: Update NIMS package version based on tag name.
-         run: |
-           poetry version ${{ steps.vars.outputs.tag }}
-          
-       - name: Setup NIMS with docs
-         run: poetry install --with docs
-        
-       - name: Update API Reference Documents(Generated using Sphinx)
-         run: |
-           rm -rf docs
-           mkdir -p docs
-           touch docs/.nojekyll         
-           poetry run sphinx-build _docs_source docs -b html
-           
-       - name: Commit file changes.
-         if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
-         run: |
-           git config --local user.email "action@github.com"
-           git config --local user.name "GitHub Action"
-           git add .
-           git commit -m "Promote NIMS package version and update Sphinx generated files in _docs" -a
-          
-       - name: Push changes to the dev_23.3 branch
-         if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
-         uses: CasperWA/push-protected@v2
-         with:
-           token: ${{ secrets.ADMIN_PAT }}
-           branch: ${{ github.event.release.target_commitish }}  
-           unprotect_reviews: true
-      
       # To Test the Publish use : poetry publish --build --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }} -r test-pypi
-       - name: Build NIMS Python package and publish to PyPI
-         if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
-         run: |
-           poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}
-
-       - uses: actions/upload-artifact@v3
-         with:
-           name: NIMS Artifacts
-           path: dist/ # path/to/artifact
+      - name: Build NIMS Python package and publish to PyPI
+        if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
+        run: |
+          poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}
+        
+      - uses: actions/upload-artifact@v3
+        with:
+          name: NIMS Artifacts
+          path: dist/ # path/to/artifact
