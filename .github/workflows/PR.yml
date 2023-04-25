@@ -14,8 +14,8 @@ jobs:
     env:
       PYTHON_VERSION: 3.9
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - uses: Gr1N/setup-poetry@v8
@@ -26,7 +26,7 @@ jobs:
           poetry-version: ${{ env.POETRY_VERSION }}
       - name: Check for lock changes (nisdc)
         run: poetry lock --check
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.cache/pypoetry/virtualenvs
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
