@@ -1,0 +1,40 @@
+name: PR
+
+on:
+  pull_request:
+    branches:
+      - 'dev_23.3'
+      
+env:
+  POETRY_VERSION: 1.4.2
+  
+jobs:
+  checks-nisdc:
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_VERSION: 3.9
+        steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: Gr1N/setup-poetry@v8
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - uses: Gr1N/setup-poetry@v8
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - name: Check for lock changes (nisdc)
+        run: poetry lock --check
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+      - name: Install nisdc
+        run: poetry install -v
+      - name: Lint nisdc
+        run: poetry run ni-python-styleguide lint
+      - name: Mypy static analysis (nisdc)
+        run:  poetry run mypy -p nisdc     
+  
+  
