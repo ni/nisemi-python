@@ -50,12 +50,6 @@ jobs:
       - name: Setup NIMS with docs
         run: poetry install --with docs
 
-      - name: Update API Reference Documents(Generated using Sphinx)
-        run: |
-          rm -rf docs
-          mkdir -p docs
-          touch docs/.nojekyll         
-          poetry run sphinx-build _docs_source docs -b html
       - name: Commit file changes.
         if: ${{ startsWith(github.event.release.target_commitish, 'dev_23.3') }}
         run: |
