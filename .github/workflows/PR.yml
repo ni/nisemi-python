@@ -3,7 +3,7 @@ name: PR
 on:
   pull_request:
     branches:
-      - 'dev_23.3'
+      - 'main'
       
 env:
   POETRY_VERSION: 1.4.2
