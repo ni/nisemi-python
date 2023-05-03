@@ -1,17 +1,19 @@
-'''
-Overview: Demonstrates how to use the Semi Device Control APIs to establish
-communication sequence with the DUT
-Requirement: Python full development system
+"""Overview:.
+ 
+Demonstrates how to use the Semi Device Control APIs to 
+establish communication sequence with the DUT.
 
+Requirement: Python full development system.
 Instructions:
-    1. Run this python code
-    2. View the read register value being printed in the terminal for each
-    iteration
-'''
-
+1. Run this python code.
+2. View the read register value being printed in the terminal for each iteration
+"""
+# flake8: noqa
 import os
 import sys
 import time
+
+import nisdc_device_elements
 
 # To add the directory of the source file(nisemidevicecontrol.py) when the
 # example is opened from the examples folder or the top level folder
@@ -20,11 +22,11 @@ sys.path.append(os.getcwd())
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nisdc.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
-import nisdc_device_elements
+
 
 # Get Instrument Studio Configuration
-ISconfigpath = os.path.join(os.path.dirname(
-    os.path.abspath(__file__)), 'conf', 'isconfig.sdconfig'
+ISconfigpath = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "conf", "isconfig.sdconfig"
 )
 
 
@@ -35,23 +37,17 @@ ISconfigpath = os.path.join(os.path.dirname(
 semi_device_control = None
 
 try:
-
     semi_device_control = SemiconductorDeviceControl(ISconfigpath)
     semi_device_control.start()
 
     # Using the DIO APIs to control Board/Device Pins
-    '''
-    Pin State corresponding int values
-    2-Terminate
-    1-High
-    0-Low
-    '''
+    """Pin State corresponding int values. 2-Terminate, 1-High, 0-Low."""
 
     semi_device_control.write_pin_state("Vdd", 1)
     semi_device_control.write_pin_state("Vdd_IO", 1)
     semi_device_control.write_pin_state("CS", 1)
     semi_device_control.write_pin_state("SDO", 0)
-    
+
     # Wait for DUT to start up
     time.sleep(0.5)
 
@@ -59,10 +55,12 @@ try:
     # Using the Read Register APIs to read the register data from the device
     for i in range(25):
         semi_device_control.write_register_by_name_device(
-            nisdc_device_elements.Register.LPS22HH.Control_Register.THS_P_H, i)
+            nisdc_device_elements.Register.LPS22HH.Control_Register.THS_P_H, i
+        )
 
         reg_data = semi_device_control.read_register_by_name_device(
-            nisdc_device_elements.Register.LPS22HH.Control_Register.THS_P_H)
+            nisdc_device_elements.Register.LPS22HH.Control_Register.THS_P_H
+        )
 
         print(hex(reg_data))
         time.sleep(0.5)

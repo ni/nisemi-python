@@ -55,7 +55,7 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 # Installation
 
 ** Dependency Installation **  
-1. Semiconductor Device Control addon for InstrumentStudio 2019 - `ni download <update the download link>`_.  
+1. Semiconductor Device Control addon for InstrumentStudio 2023 Q2 - `ni download <update the download link>`_.  
 2. pythonnet 2.5.1 - [pypi download](https://pypi.org/project/pythonnet/#description)  
 
 ** Work with github source code **  

@@ -1,17 +1,19 @@
-'''
-Overview: Demonstrates how to use the NI Digital Instance through
-Semi Device Control APIs to establish communication sequence with the DUT
-Requirement: Python full development system
+"""Overview:.
 
-Instructions:
-    1. Run this python code
-    2. View the read register value being printed in the terminal for each
-    iteration
-'''
+Demonstrates how to use the NI Digital Instance through
+Semi Device Control APIs to establish communication sequence with the DUT.
 
+Requirement: Python full development system.
+
+Instructions:.
+1. Run this python code.
+2. View the read register value being printed in the terminal for each iteration.
+"""
+# flake8: noqa
 import os
 import sys
 import time
+
 import nidigital
 
 # To add the directory of the source file(nisemidevicecontrol.py) when the
@@ -23,8 +25,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from nisdc.nisemidevicecontrol import SemiconductorDeviceControl  # noqa:E402
 
 # Get Instrument Studio Configuration
-ISconfigpath = os.path.join(os.path.dirname(
-    os.path.abspath(__file__)), 'conf', 'LPS22HH I3C.sdconfig'
+ISconfigpath = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "conf", "LPS22HH I3C.sdconfig"
 )
 
 
@@ -36,13 +38,12 @@ semi_device_control = None
 nidigital_session = None
 
 try:
-
     semi_device_control = SemiconductorDeviceControl(ISconfigpath)
     semi_device_control.start()
 
-    # Get the 657x session 
+    # Get the 657x session
     session_id = int(semi_device_control.get_instrument_session("NI 657x").SessionID)
-    nidigital_session =  nidigital.Session.from_handle(session_id)
+    nidigital_session = nidigital.Session.from_handle(session_id)
 
     # Using the NI Digital DIO APIs to control Board/Device Pins
     pinset = nidigital_session.channels["3"]
@@ -68,10 +69,12 @@ try:
     # Using the Read Register APIs to read the register data from the device
     for i in range(25):
         semi_device_control.write_register_by_name_device(
-            "LPS22HH-Control_Register-THS_P_H", i)
+            "LPS22HH-Control_Register-THS_P_H", i
+        )
 
         reg_data = semi_device_control.read_register_by_name_device(
-            "LPS22HH-Control_Register-THS_P_H")
+            "LPS22HH-Control_Register-THS_P_H"
+        )
 
         print(hex(reg_data))
         time.sleep(0.5)
