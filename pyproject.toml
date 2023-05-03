@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">= 3.7, < 3.10"
-pythonnet = ">=2.5.1"
+pythonnet = "2.5.2"
 
 [tool.poetry.group.dev.dependencies]
 ni-python-styleguide = ">=0.4.0"
