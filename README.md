@@ -59,7 +59,7 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 2. pythonnet 2.5.2 - [pypi download](https://pypi.org/project/pythonnet/#description)  
 
 ** Work with github source code **  
-3. Clone the github repository - [semiconductor device control python api github repo](https://github.com/ni/nisemi-python)
+3. Clone the github repository - [semiconductor device control python api github repo](https://github.com/ni/nisemi-python).                                           
 4. Use the APIs from 'nisdc' folder in your program  
 
 ** Work with Semiconductor Device Control Python API from pypi **  
