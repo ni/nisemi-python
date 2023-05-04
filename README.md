@@ -55,20 +55,20 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 # Installation
 
 ** Dependency Installation **  
-1. Semiconductor Device Control addon for InstrumentStudio 2023 Q2 - `ni download <update the download link>`_.  
-2. pythonnet 2.5.1 - [pypi download](https://pypi.org/project/pythonnet/#description)  
+1. Semiconductor Device Control addon for InstrumentStudio 2023 Q2.  
+2. pythonnet 2.5.2 - [pypi download](https://pypi.org/project/pythonnet/#description)  
 
 ** Work with github source code **  
-3. Clone the github repository - '[semiconductor device control python api github repo]<link>'_ 
+3. Clone the github repository - [semiconductor device control python api github repo](https://github.com/ni/nisemi-python)
 4. Use the APIs from 'nisdc' folder in your program  
 
 ** Work with Semiconductor Device Control Python API from pypi **  
-3. Go to Semiconductor Device Contro Python API location in `pypi <ni pypi download link>`_.  
+3. Go to Semiconductor Device Control Python API location in the github repository.  
 4. Install the package and use the api libraries in your program  
 
 # Usage
 
-Reference example is available in the 'github repository <link>'_ for developers (under examples folder), to refer on how to use the python APIs in the test program.
+Reference example is available in the(https://github.com/ni/nisemi-python) for developers (under examples folder), to refer on how to use the python APIs in the test program.
 
 # Documentation
 
@@ -80,7 +80,7 @@ We welcome contributions! You can clone the project repository, make changes, bu
 
 # Bugs / Feature Requests
 
-To report a bug or submit a feature request specific feature, please use the `GitHub issues page <>`_.
+To report a bug or submit a feature request specific feature, please use the https://github.com/ni/nisemi-python/issues.
 
 Fill in the issue template as completely as possible and we will respond as soon
 as we can.
