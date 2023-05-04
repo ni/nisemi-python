@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    name: Update API reference docs and Publish NIMS Package to PyPI
+    name: Publish NIMS Package to PyPI
     runs-on : ubuntu-latest 
     steps:
       - uses: actions/checkout@v3
@@ -56,7 +56,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Promote NIMS package version and update Sphinx generated files in _docs" -a
+          git commit -m "Promote NIMS package version" -a
       
       - name: Push changes to the main branch
         if: ${{ startsWith(github.event.release.target_commitish, 'main') }}
