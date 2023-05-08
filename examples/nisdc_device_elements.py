@@ -1,11 +1,8 @@
-"""This file contains registers and field info."""
-
-
-# flake8: noqa
 class Register:
-    """This class contains all register info."""
+    """This file contains registers and field info."""
+    # flake8: noqa
     class LPS22HH:
-        """This class contains LPS22HH registers info."""
+        """This class contains all register info."""
         class Control_Register:
             """"This class contains different registers info present in LPS22H."""
             INTERRUPT_CFG = "LPS22HH-Control_Register-INTERRUPT_CFG"
