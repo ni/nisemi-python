@@ -1,4 +1,6 @@
 """This file contains registers and field info."""
+
+
 # flake8: noqa
 class Register:
     """This class contains all register info."""
@@ -118,6 +120,6 @@ class Field:
             TOUT = "LPS22HH-Sensor_Register-TOUT"
 
         class FIFO_Register:
-            """"This class contains FIFO registers pin info."""
+            """This class contains FIFO registers pin info."""
             FIFO_P = "LPS22HH-FIFO_Register-FIFO_P"
             FIFO_T = "LPS22HH-FIFO_Register-FIFO_T"
