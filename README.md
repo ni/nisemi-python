@@ -6,12 +6,14 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 
 # Semiconductor Device Control Python API Status
 
-**Setup and cleanup functions**  
+**Setup and cleanup functions**
 1. Instantiate - using IS configuration file  
 2. Destroy  
 3. Start  
 4. Stop  
-**Hardware Read & Write to Register and Field**  
+
+**Hardware Read & Write to Register and Field** 
+
 5. Write Register by name (Device)  
 6. Read Register by name (Device)  
 7. Write Register by Address (Device)  
@@ -20,15 +22,19 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 10. Read Custom Register by Address (Device) 
 11. Write Field by Name (Device)  
 12. Read Field by Name (Device)  
-13. Write Field by value definition (Device)
-**Hardware multiple Read & Write to Register and Field**  
+13. Write Field by value definition (Device)  
+
+**Hardware multiple Read & Write to Register and Field**
+
 14. Write Multiple Register by Name (Device)  
 15. Read Multiple Register by name (Device)  
 16. Write Multiple Register by Address (Device)  
 17. Read Multiple Register by Address (Device)  
 18. Write Multiple Fields by Name (Device)  
 19. Read Multiple Field by Name (Device)  
-**Cache Read & Write to Register and Field**  
+
+**Cache Read & Write to Register and Field**
+
 20. Write Register by name (Cache)  
 21. Read Register by name (Cache)  
 22. Write Register by Address (Cache)  
@@ -38,30 +44,38 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 26. Write Field by value definition (cache)  
 27. Write from Cache to Device  
 28. Clear Cache  
+
 **Cache multiple Read & Write to Register and Field**  
+
 29. Write Multiple Register by Name (Cache)  
 30. Read Multiple Register by name (Cache)  
 31. Write Multiple Register by Address (Cache)  
 32. Read Multiple Register by Address (Cache)  
 33. Write Multiple Fields by Name (Cache)  
-34. Read Multiple Field by Name (Cache)  
-**DIO operation**  
+34. Read Multiple Field by Name (Cache) 
+
+**DIO operation**
+
 35. Write Pin State  
-36. Read Pin State  
+36. Read Pin State 
+
 **Utils**
+
 37. Get Dynamic Protocol Settings
 38. Update Dynamic Protocol Settings
-39. Get Instrument Session
+39. Get Instrument Session **
 
+(** This API is deprecated from 2023 Q4 version of Semiconductor Device Control Addon.
+Refer to the user manual for more information.)
 
 # Installation
 
 **Dependency Installation**  
 1. Semiconductor Device Control addon for InstrumentStudio 2023 Q4.  
-2. pythonnet 2.5.1 - [pypi download](https://pypi.org/project/pythonnet/#description)  
+2. pythonnet 2.5.2 - [pypi download](https://pypi.org/project/pythonnet/#description)  
 
 **Work with github source code**  
-3. Clone the github repository - [semiconductor device control python api github repo](https://github.com/ni/nisemi-python).
+3. Clone the github repository - [semiconductor device control python api github repo](https://github.com/ni/nisemi-python).  
 4. Use the APIs from 'nisdc' folder in your program  
 
 **Work with Semiconductor Device Control Python API from pypi**  
