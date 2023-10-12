@@ -66,19 +66,20 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 39. Get Instrument Session **
 
 (** This API is deprecated from 2023 Q4 version of Semiconductor Device Control Addon.
-Refer to the user manual for more information.)
+Refer to the [user manual](https://www.ni.com/documentation/en/semiconductor-device-control/latest/manual/manual-overview/) for more information.)
 
-# Installation
-
+# Installation   
 **Dependency Installation**  
 1. Semiconductor Device Control addon for InstrumentStudio 2023 Q4.  
 2. pythonnet 2.5.2 - [pypi download](https://pypi.org/project/pythonnet/#description)  
 
 **Work with github source code**  
+
 3. Clone the github repository - [semiconductor device control python api github repo](https://github.com/ni/nisemi-python).  
 4. Use the APIs from 'nisdc' folder in your program  
 
-**Work with Semiconductor Device Control Python API from pypi**  
+**Work with Semiconductor Device Control Python API from PyPI**
+
 5. Go to Semiconductor Device Control Python API location in the github repository.  
 6. Install the package and use the api libraries in your program  
 
