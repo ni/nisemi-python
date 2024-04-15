@@ -44,7 +44,7 @@ try:
 
     # Get the resource name of the instrument session for NI 657x device.
     resource_name = semi_device_control.get_instrument_session("NI 657x").ResourceName
-    #Create an insecure gRPC channel to connect to the device server
+    # Create an insecure gRPC channel to connect to the device server
     device_server_channel = grpc.insecure_channel("localhost:31763")
     grpc_option = nidigital.GrpcSessionOptions(
         grpc_channel= device_server_channel,
