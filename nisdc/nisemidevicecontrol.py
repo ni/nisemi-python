@@ -12,6 +12,7 @@ sys.path.append(device_control_path)
 
 clr.AddReference("SemiconductorDeviceControl")
 from SemiconductorDeviceControl import SemiDeviceControlMain  # noqa:E402
+from SemiconductorDeviceControl import PinState  # noqa:E402
 
 def generate_class_string(element_type, device_element_list): 
     """This method generates the class string to be written to the auto generated file."""
@@ -951,7 +952,7 @@ class SemiconductorDeviceControl:
         """
         try:
             pin_state = self.semidevicecontrol_session.ReadPinState(pin_name)
-            return pin_state
+            return int(pin_state)
 
         except Exception as e:
             print("Exception occured at read pin state")
@@ -971,7 +972,7 @@ class SemiconductorDeviceControl:
             2-Terminate, 1=High, 0-Low.
         """
         try:
-            self.semidevicecontrol_session.WritePinState(pin_name, pin_state)
+            self.semidevicecontrol_session.WritePinState(pin_name, PinState(pin_state))
 
         except Exception as e:
             print("Exception occured at write pin state")
