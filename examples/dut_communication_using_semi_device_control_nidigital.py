@@ -13,6 +13,7 @@ Instructions:.
 import os
 import sys
 import time
+import grpc
 
 import nidigital
 
@@ -41,9 +42,21 @@ try:
     semi_device_control = SemiconductorDeviceControl(ISconfigpath)
     semi_device_control.start()
 
-    # Get the 657x session
-    session_id = int(semi_device_control.get_instrument_session("NI 657x").SessionID)
-    nidigital_session = nidigital.Session.from_handle(session_id)
+    # Attach to the existing 657x gRPC session.
+    # Get the resource name of the instrument session for NI 657x device.
+    resource_name = semi_device_control.get_instrument_session("NI 657x").ResourceName
+    
+    # Create an insecure gRPC channel to connect to the device server
+    device_server_channel = grpc.insecure_channel("localhost:31763")
+    grpc_option = nidigital.GrpcSessionOptions(
+        grpc_channel= device_server_channel,
+        session_name=resource_name,
+        initialization_behavior=nidigital.SessionInitializationBehavior.ATTACH_TO_SERVER_SESSION)
+    
+    # get the existing 657x instrument session.
+    nidigital_session = nidigital.Session(
+        resource_name=resource_name,
+        grpc_options=grpc_option)
 
     # Using the NI Digital DIO APIs to control Board/Device Pins
     pinset = nidigital_session.channels["3"]
