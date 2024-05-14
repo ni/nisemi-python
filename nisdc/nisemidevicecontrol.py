@@ -1170,6 +1170,26 @@ class SemiconductorDeviceControl:
         except Exception as e:
             print("Exception occured at get instrument session")
             raise e
+        
+    def get_grpc_session_options(self, interface_name):
+        """Gets the grpc options for the instrument session/
+
+            Return:
+                string {address}
+                int {port}
+                string {session Name}
+        """
+
+        try:
+            grpc_session_options = self.semidevicecontrol_session.GetGrpcSessionOptions(interface_name)
+            address = grpc_session_options.Address
+            port = grpc_session_options.Port
+            session_name = grpc_session_options.SessionName
+            return (address,port,session_name)
+        
+        except Exception as e:
+            print("Exception occured at get grpc session options")
+            raise e
 
     def get_interface_details(self):
         """Gets the list of interface name and interface type.
