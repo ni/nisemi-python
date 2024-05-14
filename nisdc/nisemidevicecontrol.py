@@ -1172,7 +1172,7 @@ class SemiconductorDeviceControl:
             raise e
         
     def get_grpc_session_options(self, interface_name):
-        """Gets the grpc options for the instrument session/
+        """Gets the grpc options for the instrument session
 
             Return:
                 string {address}
