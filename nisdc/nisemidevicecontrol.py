@@ -1175,17 +1175,12 @@ class SemiconductorDeviceControl:
         """Gets the grpc options for the instrument session
 
             Return:
-                string {address}
-                int {port}
-                string {session Name}
+                grpc_session_options { Object contains address {string}, port {int}, session_name{string} }
         """
 
         try:
             grpc_session_options = self.semidevicecontrol_session.GetGrpcSessionOptions(interface_name)
-            address = grpc_session_options.Address
-            port = grpc_session_options.Port
-            session_name = grpc_session_options.SessionName
-            return (address,port,session_name)
+            return grpc_session_options
         
         except Exception as e:
             print("Exception occured at get grpc session options")
