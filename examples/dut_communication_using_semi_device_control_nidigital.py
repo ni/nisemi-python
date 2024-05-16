@@ -44,10 +44,11 @@ try:
 
     # Attach to the existing 657x gRPC session.
     # Get the resource name of the instrument session for NI 657x device.
-    grpc_session_options = semi_device_control.get_grpc_session_options("NI 657x")
-    
+    session_options = semi_device_control.get_session_options("NI 657x")
+    grpc_session_options = session_options[0]
+
     # Create an insecure gRPC channel to connect to the device server
-    device_server_channel = grpc.insecure_channel(grpc_session_options.Address + ":" + str(grpc_session_options.Port))
+    device_server_channel = session_options[1]
 
     grpc_option = nidigital.GrpcSessionOptions(
         grpc_channel= device_server_channel,
@@ -55,7 +56,6 @@ try:
         initialization_behavior=nidigital.SessionInitializationBehavior.ATTACH_TO_SERVER_SESSION)
     
     # get the existing 657x instrument session.
-    # Session name will always be same as of the resource name, whenever the digital session is created from SDC
     nidigital_session = nidigital.Session(
         resource_name=grpc_session_options.SessionName,
         grpc_options=grpc_option)

@@ -1,6 +1,7 @@
 """This file is used for Semi Device Control API."""
 import os
 import sys
+import grpc
 
 import clr
 # flake8: noqa
@@ -1171,16 +1172,19 @@ class SemiconductorDeviceControl:
             print("Exception occured at get instrument session")
             raise e
         
-    def get_grpc_session_options(self, interface_name):
+    def get_session_options(self, interface_name):
         """Gets the grpc options for the instrument session.
+           Creates service server channel using the grpc options.
 
             Return:
-                grpc_session_options { Object contains address {string}, port {int}, session_name{string} }
+                grpc_session_options { Object contains address {string}, port {int}, session_name{string} },
+                device_secure_channel { grpc.Channel }
         """
 
         try:
             grpc_session_options = self.semidevicecontrol_session.GetGrpcSessionOptions(interface_name)
-            return grpc_session_options
+            device_server_channel = grpc.insecure_channel(grpc_session_options.Address + ":" + str(grpc_session_options.Port))
+            return grpc_session_options, device_server_channel
         
         except Exception as e:
             print("Exception occured at get grpc session options")
