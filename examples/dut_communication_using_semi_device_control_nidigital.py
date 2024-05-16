@@ -30,6 +30,8 @@ ISconfigpath = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "conf", "LPS22HH I3C.sdconfig"
 )
 
+#Name of the interface to fetch details
+interface_name = "NI 657x"
 
 # Instantiate the 'Device Control session' and start the 'Hardware session'
 # using the Instantiate and Start API respectively. These have to always be
@@ -44,7 +46,7 @@ try:
 
     # Attach to the existing 657x gRPC session.
     # Get the resource name of the instrument session for NI 657x device.
-    session_options = semi_device_control.get_session_options("NI 657x")
+    session_options = semi_device_control.get_session_options(interface_name)
     grpc_session_options = session_options[0]
 
     # Create an insecure gRPC channel to connect to the device server
