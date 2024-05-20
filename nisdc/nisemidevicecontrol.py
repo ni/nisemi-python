@@ -1181,8 +1181,7 @@ class SemiconductorDeviceControl:
            Creates service server channel using the grpc options.
 
             Return:
-                grpc_session_options { Object contains address {string}, port {int}, session_name{string} },
-                device_secure_channel { grpc.Channel }
+                grpc_session_options {Object contains the session_name {string} and device_server_channel {grpc.Channel}}
         """
 
         try:
