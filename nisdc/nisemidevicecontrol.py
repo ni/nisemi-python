@@ -1,6 +1,7 @@
 """This file is used for Semi Device Control API."""
 import os
 import sys
+import grpc
 
 import clr
 # flake8: noqa
@@ -49,6 +50,10 @@ def generate_class_string(element_type, device_element_list):
     class_content += "\n\n"
     return class_content
 
+class GrpcSessionOptions:
+    def __init__(self, session_name, grpc_channel) :
+        self.session_name = session_name
+        self.grpc_channel = grpc_channel
 
 class SemiconductorDeviceControl:
     """This class is used for Instrument Studio export configuration."""
@@ -1169,6 +1174,23 @@ class SemiconductorDeviceControl:
 
         except Exception as e:
             print("Exception occured at get instrument session")
+            raise e
+        
+    def get_session_options(self, interface_name):
+        """Gets the grpc options for the instrument session.
+           Creates service server channel using the grpc options.
+
+            Return:
+                grpc_session_options {Object contains the session_name {string} and device_server_channel {grpc.Channel}}
+        """
+
+        try:
+            grpc_session_options = self.semidevicecontrol_session.GetGrpcSessionOptions(interface_name)
+            device_server_channel = grpc.insecure_channel(grpc_session_options.Address + ":" + str(grpc_session_options.Port))
+            return GrpcSessionOptions(grpc_session_options.SessionName, device_server_channel)
+        
+        except Exception as e:
+            print("Exception occured at get grpc session options")
             raise e
 
     def get_interface_details(self):
