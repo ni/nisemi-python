@@ -50,6 +50,10 @@ def generate_class_string(element_type, device_element_list):
     class_content += "\n\n"
     return class_content
 
+class GrpcSessionOptions:
+    def __init__(self, session_name, grpc_channel) :
+        self.session_name = session_name
+        self.grpc_channel = grpc_channel
 
 class SemiconductorDeviceControl:
     """This class is used for Instrument Studio export configuration."""
@@ -1184,7 +1188,7 @@ class SemiconductorDeviceControl:
         try:
             grpc_session_options = self.semidevicecontrol_session.GetGrpcSessionOptions(interface_name)
             device_server_channel = grpc.insecure_channel(grpc_session_options.Address + ":" + str(grpc_session_options.Port))
-            return grpc_session_options, device_server_channel
+            return GrpcSessionOptions(grpc_session_options.SessionName, device_server_channel)
         
         except Exception as e:
             print("Exception occured at get grpc session options")
