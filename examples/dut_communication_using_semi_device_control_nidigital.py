@@ -54,7 +54,7 @@ try:
     
     # get the existing 657x instrument session.
     nidigital_session = nidigital.Session(
-        resource_name = session_options.session_name,
+        resource_name = session_options.resource_name,
         grpc_options = grpc_option)
 
     # Using the NI Digital DIO APIs to control Board/Device Pins
