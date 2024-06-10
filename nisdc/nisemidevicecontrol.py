@@ -81,7 +81,7 @@ class SemiconductorDeviceControl:
             raise e
         
     def attach_to_existing_session(self):
-        """Returns the existing device control session
+        """Returns the instantiated device control session if any
         """
         try:
             self.semidevicecontrol_session = self.semidevicecontrol_main.AttachToExistingSession()
