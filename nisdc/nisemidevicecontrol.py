@@ -88,7 +88,7 @@ class SemiconductorDeviceControl:
             return self.semidevicecontrol_main
         
         except Exception as e:
-            print(e)
+            print("Error occurred while attaching to the instantiated semi device control session: {}".foramat(e))
             raise e
 
     def start(self):
