@@ -85,7 +85,7 @@ class SemiconductorDeviceControl:
         """
         try:
             self.semidevicecontrol_session = self.semidevicecontrol_main.AttachToExistingSession()
-            return self.semidevicecontrol_main
+            return self.semidevicecontrol_session
         
         except Exception as e:
             print("Error occurred while attaching to the instantiated semi device control session: {}".foramat(e))
