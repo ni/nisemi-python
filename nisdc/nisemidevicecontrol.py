@@ -80,6 +80,17 @@ class SemiconductorDeviceControl:
         except Exception as e:
             print("Exception in accessing conf: {}".format(e))
             raise e
+        
+    def attach_to_existing_session(self):
+        """Returns the instantiated device control session if any
+        """
+        try:
+            self.semidevicecontrol_session = self.semidevicecontrol_main.AttachToExistingSession()
+            return self
+        
+        except Exception as e:
+            print("Error occurred while attaching to the instantiated semi device control session: {}".foramat(e))
+            raise e
 
     def start(self):
         """Description:.
