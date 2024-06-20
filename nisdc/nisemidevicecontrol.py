@@ -59,7 +59,7 @@ class GrpcSessionOptions:
 class SemiconductorDeviceControl:
     """This class is used for Instrument Studio export configuration."""
 
-    def __init__(self, isconfigpath):
+    def __init__(self, isconfigpath=None):
         """Create and return device control session using Instrument Studio export configuration.
 
         IS export configuration contains the register map and hardware configuration
@@ -73,9 +73,10 @@ class SemiconductorDeviceControl:
 
         try:
             self.semidevicecontrol_main = SemiDeviceControlMain()
-            self.semidevicecontrol_session = (
-                self.semidevicecontrol_main.CreateSemiDeviceControlSession(isconfigpath)
-            )
+            if isconfigpath:
+                self.semidevicecontrol_session = (
+                    self.semidevicecontrol_main.CreateSemiDeviceControlSession(isconfigpath)
+                )
 
         except Exception as e:
             print("Exception in accessing conf: {}".format(e))
