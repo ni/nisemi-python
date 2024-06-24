@@ -66,7 +66,7 @@ class SemiconductorDeviceControl:
         for Device Control.
 
         Args:
-            isconfigpath : the isconfig path.
+            isconfigpath : the isconfig path. if not specified, the device control session will not be created.
         """
         self.semidevicecontrol_main = None
         self.semidevicecontrol_session = None
