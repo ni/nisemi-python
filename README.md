@@ -65,7 +65,7 @@ This library is dependent on Semiconductor Device Control addon for InstrumentSt
 38. Get Dynamic Protocol Settings
 39. Update Dynamic Protocol Settings
 40. Get Instrument Session **
-44. Get Session Options
+41. Get Session Options
 
 (** This API is deprecated from 2023 Q4 version of Semiconductor Device Control Addon.
 Refer to the [user manual](https://www.ni.com/documentation/en/semiconductor-device-control/latest/manual/manual-overview/) for more information.)
