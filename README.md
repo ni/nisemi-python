@@ -72,7 +72,7 @@ Refer to the [user manual](https://www.ni.com/documentation/en/semiconductor-dev
 
 # Installation   
 **Dependency Installation**  
-1. Semiconductor Device Control addon for InstrumentStudio 2023 Q4.  
+1. Semiconductor Device Control addon for InstrumentStudio 2024 Q3.  
 2. pythonnet 3.0.3 - [pypi download](https://pypi.org/project/pythonnet/#description)  
 
 **Work with github source code**  
